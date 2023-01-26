@@ -3,11 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from .dependencies import verify_api_key
 from .exceptions import CryptoException
+from .vignere.router import vignere_router
 
 app = FastAPI(
-    docs_url="/api/docs",
-    redoc_url="/api/redoc",
-    dependencies=[Depends(verify_api_key)],
+    title="API For Tucil Kripto",
+    root_path="/api"
 )
 
 app.add_middleware(
@@ -21,6 +21,11 @@ app.add_middleware(
 app.add_middleware(
     GZipMiddleware,
     minimum_size=1000
+)
+
+app.include_router(
+    vignere_router,
+    dependencies=[Depends(verify_api_key)]
 )
 
 
