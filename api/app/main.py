@@ -1,8 +1,3 @@
 from fastapi import FastAPI
 
-app = FastAPI()
-
-
-@app.get("/api")
-async def root():
-    return {"message": "Hello World!"}
+app = FastAPI(docs_url="/api/docs", redoc_url="/api/redoc")
