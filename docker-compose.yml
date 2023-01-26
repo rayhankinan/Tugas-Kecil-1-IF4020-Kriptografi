@@ -23,6 +23,8 @@ services:
       dockerfile: Dockerfile
     container_name: kripto-api
     restart: always
+    environment:
+      API_KEY: ${API_KEY}
     hostname: kripto-api-service
     volumes:
       - ./api:/code
