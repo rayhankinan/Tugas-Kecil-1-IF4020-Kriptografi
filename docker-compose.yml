@@ -5,14 +5,27 @@ services:
   # NGINX Server
   proxy:
     image: nginx:latest
-    container_name: kripto-proxy-server
+    container_name: kripto-proxy
     restart: always
-    hostname: kripto-proxy
+    hostname: kripto-proxy-server
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - app-network
+
+  # FastAPI Backend Server
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: kripto-api
+    restart: always
+    hostname: kripto-api-service
+    volumes:
+      - ./api:/code
     networks:
       - app-network
 
