@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends
-from .schemas import VignereIn, VignereOut
+from fastapi import APIRouter, File, Form, UploadFile
+from fastapi.responses import StreamingResponse
 from .services import encrypt_service, decrypt_service
 
 router = APIRouter(
@@ -8,13 +8,21 @@ router = APIRouter(
 )
 
 
-@router.post("/encrypt", response_model=VignereOut)
-async def encrypt_handler(vignere_in: VignereIn = Depends()):
-    result = await encrypt_service(vignere_in)
-    return result
+@router.post("/encrypt-file")
+async def encrypt_handler(key: str = Form(regex=r"^[A-Za-z]+$"), file: UploadFile = File()):
+    iterable_file_content = await encrypt_service(key, file)
+    response = StreamingResponse(
+        content=iterable_file_content,
+        media_type=file.content_type
+    )
+    return response
 
 
-@router.post("/decrypt", response_model=VignereOut)
-async def decrypt_handler(vignere_in: VignereIn = Depends()):
-    result = await decrypt_service(vignere_in)
-    return result
+@router.post("/decrypt-file")
+async def decrypt_handler(key: str = Form(regex=r"^[A-Za-z]+$"), file: UploadFile = File()):
+    iterable_file_content = await decrypt_service(key, file)
+    response = StreamingResponse(
+        content=iterable_file_content,
+        media_type=file.content_type
+    )
+    return response

@@ -1,12 +1,12 @@
 from fastapi import UploadFile
-from .schemas import VignereIn, VignereOut
+from ..utils import apply_static_func_to_file
 
 
-async def encrypt_service(vignere_in: VignereIn) -> VignereOut:
+async def encrypt_service(key: str, file: UploadFile):
     # TODO: Add Vignere Encryption
-    pass
+    return apply_static_func_to_file(file, )
 
 
-async def decrypt_service(vignere_in: VignereIn) -> VignereOut:
+async def decrypt_service(key: str, file: UploadFile):
     # TODO: Add Vignere Decryption
-    pass
+    return apply_static_func_to_file(file, )
