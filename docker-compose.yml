@@ -1,0 +1,22 @@
+version: "3.8"
+
+# Services
+services:
+  # NGINX Server
+  proxy:
+    image: nginx:latest
+    container_name: kripto-proxy-server
+    restart: always
+    hostname: kripto-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - app-network
+
+# Networks
+networks:
+  app-network:
+    driver: bridge
