@@ -2,7 +2,7 @@ from fastapi import APIRouter, File, Form, UploadFile
 from fastapi.responses import StreamingResponse
 from .services import encrypt_file_service, decrypt_file_service
 
-extended_vignere_router = APIRouter(prefix="/vignere")
+extended_vignere_router = APIRouter(prefix="/extended-vignere")
 
 
 @extended_vignere_router.post("/encrypt-file")
