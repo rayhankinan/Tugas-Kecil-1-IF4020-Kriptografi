@@ -4,9 +4,10 @@ from fastapi.middleware.gzip import GZipMiddleware
 from .dependencies import verify_api_key
 from .exceptions import CryptoException
 from .vignere.router import vignere_router
+from .extended_vignere.router import extended_vignere_router
 
 app = FastAPI(
-    title="API For Tucil Kripto",
+    title="API Tucil 1 Kripto",
     root_path="/api"
 )
 
@@ -25,6 +26,11 @@ app.add_middleware(
 
 app.include_router(
     vignere_router,
+    dependencies=[Depends(verify_api_key)]
+)
+
+app.include_router(
+    extended_vignere_router,
     dependencies=[Depends(verify_api_key)]
 )
 
