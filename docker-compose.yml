@@ -4,7 +4,7 @@ version: "3.8"
 services:
   # NGINX Server
   proxy:
-    image: nginx:latest
+    image: nginx:1.23.3
     container_name: kripto-proxy
     restart: always
     hostname: kripto-proxy-server
@@ -28,6 +28,25 @@ services:
     hostname: kripto-api-service
     volumes:
       - ./api:/code
+    networks:
+      - app-network
+
+  # React Vite Frontend Server
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: kripto-client
+    restart: always
+    environment:
+      API_KEY: ${API_KEY}
+      PORT: ${CLIENT_PORT}
+    hostname: kripto-client-service
+    ports:
+      - "81:80"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
     networks:
       - app-network
 
