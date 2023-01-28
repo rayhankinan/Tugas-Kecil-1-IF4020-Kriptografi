@@ -23,3 +23,19 @@ async def apply_dynamic_func_to_file(file: UploadFile, bytes_group: int = 1, fun
     while chunk := await file.read(bytes_group):
         yield func(chunk, counter)
         counter += 1
+
+
+def alphabet_to_num(char: str):
+    return ord(char) - 96
+
+
+def num_to_alphabet(num: int):
+    return chr(num + 96)
+
+
+def binary_to_num(binary: bytes):
+    return int.from_bytes(binary, byteorder="big", signed=False)
+
+
+def num_to_binary(num: int):
+    return num.to_bytes(1, byteorder="big", signed=False)

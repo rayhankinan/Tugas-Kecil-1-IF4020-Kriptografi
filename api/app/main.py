@@ -67,4 +67,5 @@ app.include_router(
 
 @app.exception_handler(CryptoException)
 async def crypto_exception_handler(request: Request, exc: CryptoException):
+    # TODO: Tambahkan handler untuk memproses exception
     pass
