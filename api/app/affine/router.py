@@ -1,7 +1,5 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
-from fastapi.exceptions import RequestValidationError
-from pydantic import ValidationError
 from .schemas import AffineFileIn
 from .services import encrypt_file_service, decrypt_file_service
 

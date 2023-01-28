@@ -1,6 +1,8 @@
+import math
 from typing import Callable, Type
 from fastapi import UploadFile
 from pydantic import conbytes, conint, constr
+from .constants import OVERHEAD_ASCII
 
 AlphabetStringType: Type[str] = constr(regex=r"^[A-Za-z]+$", to_lower=True)
 AlphabetCharType: Type[str] = constr(
@@ -26,11 +28,11 @@ async def apply_dynamic_func_to_file(file: UploadFile, bytes_group: int = 1, fun
 
 
 def alphabet_to_num(char: str):
-    return ord(char) - 96
+    return ord(char) - OVERHEAD_ASCII
 
 
 def num_to_alphabet(num: int):
-    return chr(num + 96)
+    return chr(num + OVERHEAD_ASCII)
 
 
 def binary_to_num(binary: bytes):
@@ -38,4 +40,5 @@ def binary_to_num(binary: bytes):
 
 
 def num_to_binary(num: int):
-    return num.to_bytes(1, byteorder="big", signed=False)
+    length = math.ceil(num / (1 << 8))
+    return num.to_bytes(length, byteorder="big", signed=False)
