@@ -7,6 +7,7 @@ from .vignere.router import vignere_router
 from .extended_vignere.router import extended_vignere_router
 from .auto_key_vignere.router import auto_key_vignere_router
 from .affine.router import affine_router
+from .hill.router import hill_router
 
 app = FastAPI(
     title="API Tucil 1 Kripto",
@@ -43,6 +44,11 @@ app.include_router(
 
 app.include_router(
     affine_router,
+    dependencies=[Depends(verify_api_key)]
+)
+
+app.include_router(
+    hill_router,
     dependencies=[Depends(verify_api_key)]
 )
 
