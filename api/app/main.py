@@ -1,8 +1,10 @@
 from fastapi import FastAPI, Depends, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
+from pydantic import ValidationError
 from .dependencies import verify_api_key
-from .exceptions import CryptoException
 from .vignere.router import vignere_router
 from .extended_vignere.router import extended_vignere_router
 from .auto_key_vignere.router import auto_key_vignere_router
@@ -65,7 +67,6 @@ app.include_router(
 )
 
 
-@app.exception_handler(CryptoException)
-async def crypto_exception_handler(request: Request, exc: CryptoException):
-    # TODO: Tambahkan handler untuk memproses exception
-    pass
+@app.exception_handler(ValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return await request_validation_exception_handler(request, exc)
