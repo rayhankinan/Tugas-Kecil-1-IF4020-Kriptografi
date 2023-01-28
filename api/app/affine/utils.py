@@ -1,5 +1,5 @@
 from typing import Type
 from pydantic import conint
 
-AffineKey: Type[int] = conint(gt=0)
-AffineShift: Type[int] = conint(gt=0)
+AffineKeyType: Type[int] = conint(gt=0)
+AffineShiftType: Type[int] = conint(gt=0)

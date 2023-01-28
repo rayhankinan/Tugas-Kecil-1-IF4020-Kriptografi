@@ -1,7 +1,8 @@
 from fastapi import File, Form, UploadFile
-from pydantic import BaseModel, constr
+from pydantic import BaseModel
+from .utils import VignereAutoKeyType
 
 
 class AutoKeyVignereFileIn(BaseModel):
-    auto_key: constr(regex=r"^[A-Za-z]+$", to_lower=True) = Form()
+    auto_key: VignereAutoKeyType = Form()
     file: UploadFile = File()
