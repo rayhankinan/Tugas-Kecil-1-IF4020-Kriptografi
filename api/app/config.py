@@ -3,7 +3,7 @@ from async_lru import alru_cache
 
 
 class Settings(BaseSettings):
-    api_key: str = Field(default=Required)
+    API_KEY: str = Field(default=Required)
 
 
 @alru_cache()
