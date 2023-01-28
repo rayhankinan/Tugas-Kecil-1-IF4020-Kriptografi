@@ -1,24 +1,10 @@
 from fastapi import File, Form, UploadFile
-from pydantic import BaseModel, conlist, constr, validator
-from .constants import MATRIX_DIMENSION
-from .utils import ConvertChar
+from pydantic import BaseModel, validator
+from .utils import ConvertChar, PlayfairKeyType
 
 
 class PlayfairFileIn(BaseModel):
-    key: conlist(
-        conlist(
-            constr(
-                min_length=1,
-                max_length=1,
-                regex=r"^[A-Za-z]+$",
-                to_lower=True
-            ),
-            min_items=MATRIX_DIMENSION,
-            max_items=MATRIX_DIMENSION
-        ),
-        min_items=MATRIX_DIMENSION,
-        max_items=MATRIX_DIMENSION
-    ) = Form()
+    key: PlayfairKeyType = Form()
     convert_character: ConvertChar = Form()
     file: UploadFile = File()
 

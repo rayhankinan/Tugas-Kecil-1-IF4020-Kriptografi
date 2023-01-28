@@ -1,5 +1,16 @@
-from typing import Callable
+from typing import Callable, Type
 from fastapi import UploadFile
+from pydantic import conbytes, conint, constr
+
+AlphabetStringType: Type[str] = constr(regex=r"^[A-Za-z]+$", to_lower=True)
+AlphabetCharType: Type[str] = constr(
+    min_length=1,
+    max_length=1,
+    regex=r"^[A-Za-z]+$",
+    to_lower=True
+)
+PositiveIntegerType: Type[int] = conint(gt=0)
+BinaryText: Type[bytes] = conbytes()
 
 
 async def apply_static_func_to_file(file: UploadFile, bytes_group: int = 1, func: Callable[[bytes], bytes] = lambda x: x):

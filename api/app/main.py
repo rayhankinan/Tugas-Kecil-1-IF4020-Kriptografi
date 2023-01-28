@@ -9,6 +9,7 @@ from .auto_key_vignere.router import auto_key_vignere_router
 from .affine.router import affine_router
 from .hill.router import hill_router
 from .playfair.router import playfair_router
+from .enigma.router import enigma_router
 
 app = FastAPI(
     title="API Tucil 1 Kripto",
@@ -55,6 +56,11 @@ app.include_router(
 
 app.include_router(
     playfair_router,
+    dependencies=[Depends(verify_api_key)]
+)
+
+app.include_router(
+    enigma_router,
     dependencies=[Depends(verify_api_key)]
 )
 

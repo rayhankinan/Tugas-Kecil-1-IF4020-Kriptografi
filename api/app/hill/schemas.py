@@ -7,4 +7,4 @@ class HillFileIn(BaseModel):
     key: HillKeyType = Form()
     file: UploadFile = File()
 
-    # TODO: Cek apakah matriks kotak dan apakah matriks dapat diinvers
+    # TODO: Cek apakah matriks berbentuk kotak dan apakah matriks dapat diinvers

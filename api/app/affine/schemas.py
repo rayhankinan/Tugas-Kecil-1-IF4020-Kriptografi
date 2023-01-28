@@ -1,9 +1,9 @@
 from fastapi import File, Form, UploadFile
 from pydantic import BaseModel
-from .utils import AffineKeyType, AffineShiftType
+from ..utils import PositiveIntegerType
 
 
 class AffineFileIn(BaseModel):
-    key: AffineKeyType = Form()
-    shift: AffineShiftType = Form()
+    key: PositiveIntegerType = Form()
+    shift: PositiveIntegerType = Form()
     file: UploadFile = File()

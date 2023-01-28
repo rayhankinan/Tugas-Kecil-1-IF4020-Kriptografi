@@ -1,7 +1,8 @@
 from fastapi import File, Form, UploadFile
-from pydantic import BaseModel, conbytes
+from pydantic import BaseModel
+from ..utils import BinaryText
 
 
 class ExtendedVignereFileIn(BaseModel):
-    key: conbytes(strip_whitespace=True, to_lower=True) = Form()
+    key: BinaryText = Form()
     file: UploadFile = File()
