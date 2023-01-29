@@ -1,8 +1,8 @@
 from fastapi import File, Form, UploadFile
 from pydantic import BaseModel
-from ..utils import BinaryText
+from ..utils import AllStringType
 
 
 class ExtendedVignereFileIn(BaseModel):
-    key: BinaryText = Form()
+    key: AllStringType = Form()
     file: UploadFile = File()
