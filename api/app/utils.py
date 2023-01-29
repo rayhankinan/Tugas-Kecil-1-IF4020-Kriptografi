@@ -1,8 +1,9 @@
 import math
-from typing import Callable, Type
+from typing import Callable, Coroutine, Type
 from fastapi import UploadFile
 from pydantic import conbytes, conint, constr
 from .constants import OVERHEAD_ASCII
+from .lib import alru_cache_typed
 
 AlphabetStringType: Type[str] = constr(regex=r"^[A-Za-z]+$", to_lower=True)
 AlphabetCharType: Type[str] = constr(
@@ -15,30 +16,34 @@ PositiveIntegerType: Type[int] = conint(gt=0)
 BinaryText: Type[bytes] = conbytes()
 
 
-async def apply_static_func_to_file(file: UploadFile, bytes_group: int = 1, func: Callable[[bytes], bytes] = lambda x: x):
+async def apply_static_func_to_file(file: UploadFile, bytes_group: int = 1, func: Callable[[bytes], Coroutine[any, any, bytes]] = lambda x: x):
     while chunk := await file.read(bytes_group):
-        yield func(chunk)
+        yield await func(chunk)
 
 
-async def apply_dynamic_func_to_file(file: UploadFile, bytes_group: int = 1, func: Callable[[bytes, int], bytes] = lambda x, _: x):
+async def apply_dynamic_func_to_file(file: UploadFile, bytes_group: int = 1, func: Callable[[bytes, int], Coroutine[any, any, bytes]] = lambda x, _: x):
     counter = 0
     while chunk := await file.read(bytes_group):
-        yield func(chunk, counter)
+        yield await func(chunk, counter)
         counter += 1
 
 
-def alphabet_to_num(char: str):
+@alru_cache_typed()
+async def alphabet_to_num(char: str):
     return ord(char) - OVERHEAD_ASCII
 
 
-def num_to_alphabet(num: int):
+@alru_cache_typed()
+async def num_to_alphabet(num: int):
     return chr(num + OVERHEAD_ASCII)
 
 
-def binary_to_num(binary: bytes):
+@alru_cache_typed()
+async def binary_to_num(binary: bytes):
     return int.from_bytes(binary, byteorder="big", signed=False)
 
 
-def num_to_binary(num: int):
+@alru_cache_typed()
+async def num_to_binary(num: int):
     length = math.ceil(num / (1 << 8))
     return num.to_bytes(length, byteorder="big", signed=False)
