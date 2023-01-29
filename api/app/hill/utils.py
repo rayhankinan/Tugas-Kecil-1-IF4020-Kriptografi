@@ -1,5 +1,5 @@
 from typing import Type, List
-from pydantic import conint, conlist
+from pydantic import conlist
 from ..utils import PositiveIntegerType
 
 HillKeyType: Type[List[List[int]]] = conlist(

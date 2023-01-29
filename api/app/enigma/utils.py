@@ -1,5 +1,6 @@
-from typing import List,  NamedTuple, Type
+from typing import Any, Dict, List, NamedTuple, Type
 from pydantic import conint, conlist, validator
+from pydantic.fields import ModelField
 from .constants import NUM_OF_ROTORS
 from ..utils import AlphabetCharType
 
@@ -9,6 +10,20 @@ class PlugboardConnection(NamedTuple):
     second_plug: AlphabetCharType
 
     # TODO: Cek apakah first_plug tidak sama dengan second_plug
+    @validator("first_plug", "second_plug")
+    def different_plug(cls, plug: AlphabetCharType, values: Dict[str, Any], field: ModelField):
+        match field.name:
+            case "first_plug":
+                if plug == values["second_plug"]:
+                    raise ValueError(
+                        "plugs cannot be equal"
+                    )
+            case "second_plug":
+                if plug == values["first_plug"]:
+                    raise ValueError(
+                        "plugs cannot be equal"
+                    )
+        return plug
 
 
 AlphabetListType: Type[List[str]] = conlist(

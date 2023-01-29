@@ -2,7 +2,6 @@ import math
 from typing import Callable, Coroutine, Type
 from fastapi import UploadFile
 from pydantic import conbytes, conint, constr
-from .constants import OVERHEAD_ASCII
 from .lib import alru_cache_typed
 
 AllStringType: Type[str] = constr(min_length=1)
@@ -12,17 +11,20 @@ AllByteType: Type[bytes] = conbytes(
 AlphabetStringType: Type[str] = constr(
     min_length=1,
     regex=r"^[A-Za-z]+$",
-    to_lower=True
+    to_lower=True,
+    strip_whitespace=True
 )
 AlphabetByteType: Type[bytes] = conbytes(
     min_length=1,
-    to_lower=True
+    to_lower=True,
+    strip_whitespace=True
 )
 AlphabetCharType: Type[str] = constr(
     min_length=1,
     max_length=1,
     regex=r"^[A-Za-z]+$",
-    to_lower=True
+    to_lower=True,
+    strip_whitespace=True
 )
 PositiveIntegerType: Type[int] = conint(gt=0)
 
