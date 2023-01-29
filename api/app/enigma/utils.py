@@ -1,6 +1,5 @@
 from typing import Any, Dict, List, NamedTuple, Type
 from pydantic import conint, conlist, validator
-from pydantic.fields import ModelField
 from .constants import NUM_OF_ROTORS
 from ..utils import AlphabetCharType
 

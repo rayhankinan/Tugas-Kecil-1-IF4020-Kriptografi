@@ -28,7 +28,7 @@ async def encrypt_file_service(key: AlphabetStringType, file: UploadFile):
 
 
 async def decrypt_file_service(key: AlphabetStringType, file: UploadFile):
-    # TODO: Add Auto Key Vignere Decryption (Masih salah)
+    # TODO: Add Auto Key Vignere Decryption (Done)
     deq: Deque[int] = deque(maxlen=len(key))
 
     async def decrypt_bytes(binary: AlphabetByteType, counter: int):
