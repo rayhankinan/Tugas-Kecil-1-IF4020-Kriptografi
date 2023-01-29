@@ -4,7 +4,7 @@ from ..constants import LENGTH_OF_ASCII
 
 
 async def encrypt_file_service(key: AllStringType, file: UploadFile):
-    # TODO: Add Extended Vignere Encryption
+    # TODO: Add Extended Vignere Encryption (Done)
     async def encrypt_bytes(binary: AllByteType, counter: int):
         raw_value = await binary_to_num(binary)
         index = counter % len(key)
@@ -17,7 +17,7 @@ async def encrypt_file_service(key: AllStringType, file: UploadFile):
 
 
 async def decrypt_file_service(key: AllStringType, file: UploadFile):
-    # TODO: Add Extended Vignere Decryption
+    # TODO: Add Extended Vignere Decryption (Done)
     async def decrypt_bytes(binary: AllByteType, counter: int):
         raw_value = await binary_to_num(binary)
         index = counter % len(key)

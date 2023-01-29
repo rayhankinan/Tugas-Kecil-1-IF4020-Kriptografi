@@ -4,5 +4,5 @@ from ..utils import AlphabetStringType
 
 
 class AutoKeyVignereFileIn(BaseModel):
-    auto_key: AlphabetStringType = Form()
+    key: AlphabetStringType = Form()
     file: UploadFile = File()

@@ -4,7 +4,7 @@ from ..constants import LENGTH_OF_ALPHABET, OVERHEAD_ASCII
 
 
 async def encrypt_file_service(key: AlphabetStringType, file: UploadFile):
-    # TODO: Add Vignere Encryption
+    # TODO: Add Vignere Encryption (Done)
     async def encrypt_bytes(binary: AlphabetByteType, counter: int):
         raw_value = await binary_to_num(binary)
         initial_value = raw_value - OVERHEAD_ASCII
@@ -18,7 +18,7 @@ async def encrypt_file_service(key: AlphabetStringType, file: UploadFile):
 
 
 async def decrypt_file_service(key: AlphabetStringType, file: UploadFile):
-    # TODO: Add Vignere Decryption
+    # TODO: Add Vignere Decryption (Done)
     async def decrypt_bytes(binary: AlphabetByteType, counter: int):
         raw_value = await binary_to_num(binary)
         initial_value = raw_value - OVERHEAD_ASCII

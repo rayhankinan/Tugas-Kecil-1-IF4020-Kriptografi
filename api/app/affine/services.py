@@ -4,7 +4,7 @@ from ..constants import LENGTH_OF_ALPHABET, OVERHEAD_ASCII
 
 
 async def encrypt_file_service(key: PositiveIntegerType, shift: PositiveIntegerType, file: UploadFile):
-    # TODO: Add Affine Encryption (Baru bisa lower alphabet)
+    # TODO: Add Affine Encryption (Baru bisa single byte)
     async def encrypt_bytes(binary: AlphabetByteType):
         raw_value = await binary_to_num(binary)
         initial_value = raw_value - OVERHEAD_ASCII
@@ -16,7 +16,7 @@ async def encrypt_file_service(key: PositiveIntegerType, shift: PositiveIntegerT
 
 
 async def decrypt_file_service(key: PositiveIntegerType, shift: PositiveIntegerType, file: UploadFile):
-    # TODO: Add Affine Decryption (Baru bisa lower alphabet)
+    # TODO: Add Affine Decryption (Baru bisa single byte)
     async def decrypt_bytes(binary: AlphabetByteType):
         raw_value = await binary_to_num(binary)
         initial_value = raw_value - OVERHEAD_ASCII
