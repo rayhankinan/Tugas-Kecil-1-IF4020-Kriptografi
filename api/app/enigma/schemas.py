@@ -1,6 +1,6 @@
+from typing import Any, Dict
 from fastapi import File, Form, UploadFile
 from pydantic import BaseModel, validator
-from pydantic.fields import ModelField
 from .utils import AlphabetListType, PlugboardConnectionListType, RotorOrderListType
 
 
@@ -13,7 +13,7 @@ class EnigmaFileIn(BaseModel):
 
     # TODO: Cek apakah panjang list notch_setting dan start_position sama dengan panjang list rotor_order
     @validator("notch_setting")
-    def same_length_notch_setting(cls, notch_setting: AlphabetListType, values: ModelField):
+    def same_length_notch_setting(cls, notch_setting: AlphabetListType, values: Dict[str, Any]):
         if len(notch_setting) != len(values["rotor_order"]):
             raise ValueError(
                 "must be the same length as rotor_order"
@@ -21,7 +21,7 @@ class EnigmaFileIn(BaseModel):
         return notch_setting
 
     @validator("start_position")
-    def same_length_start_position(cls, start_position: AlphabetListType, values: ModelField):
+    def same_length_start_position(cls, start_position: AlphabetListType, values: Dict[str, Any]):
         if len(start_position) != len(values["rotor_order"]):
             raise ValueError(
                 "must be the same length as rotor_order"

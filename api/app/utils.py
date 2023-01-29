@@ -16,15 +16,13 @@ AlphabetStringType: Type[str] = constr(
 )
 AlphabetByteType: Type[bytes] = conbytes(
     min_length=1,
-    to_lower=True,
-    strip_whitespace=True
+    to_lower=True
 )
 AlphabetCharType: Type[str] = constr(
     min_length=1,
     max_length=1,
     regex=r"^[A-Za-z]+$",
-    to_lower=True,
-    strip_whitespace=True
+    to_lower=True
 )
 PositiveIntegerType: Type[int] = conint(gt=0)
 
@@ -57,6 +55,5 @@ async def binary_to_num(binary: bytes):
 
 
 @alru_cache_typed()
-async def num_to_binary(num: int):
-    length = math.ceil(num / (1 << 8))
+async def num_to_binary(num: int, length: int):
     return num.to_bytes(length, byteorder="big", signed=False)

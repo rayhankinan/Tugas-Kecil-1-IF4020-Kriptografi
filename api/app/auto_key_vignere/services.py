@@ -21,7 +21,7 @@ async def encrypt_file_service(key: AlphabetStringType, file: UploadFile):
             partitioned_key = raw_key - OVERHEAD_ASCII
 
         final_value = (initial_value + partitioned_key) % LENGTH_OF_ALPHABET
-        final_bytes = await num_to_binary(final_value + OVERHEAD_ASCII)
+        final_bytes = await num_to_binary(final_value + OVERHEAD_ASCII, 1)
         return final_bytes
 
     return apply_dynamic_func_to_file(file, bytes_group=1, func=encrypt_bytes)
@@ -44,7 +44,7 @@ async def decrypt_file_service(key: AlphabetStringType, file: UploadFile):
         final_value = (initial_value - partitioned_key) % LENGTH_OF_ALPHABET
         deq.append(final_value)
 
-        final_bytes = await num_to_binary(final_value + OVERHEAD_ASCII)
+        final_bytes = await num_to_binary(final_value + OVERHEAD_ASCII, 1)
         return final_bytes
 
     return apply_dynamic_func_to_file(file, bytes_group=1, func=decrypt_bytes)

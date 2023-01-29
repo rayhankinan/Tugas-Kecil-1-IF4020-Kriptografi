@@ -10,19 +10,12 @@ class PlugboardConnection(NamedTuple):
     second_plug: AlphabetCharType
 
     # TODO: Cek apakah first_plug tidak sama dengan second_plug
-    @validator("first_plug", "second_plug")
-    def different_plug(cls, plug: AlphabetCharType, values: Dict[str, Any], field: ModelField):
-        match field.name:
-            case "first_plug":
-                if plug == values["second_plug"]:
-                    raise ValueError(
-                        "plugs cannot be equal"
-                    )
-            case "second_plug":
-                if plug == values["first_plug"]:
-                    raise ValueError(
-                        "plugs cannot be equal"
-                    )
+    @validator("second_plug")
+    def different_plug(cls, plug: AlphabetCharType, values: Dict[str, Any]):
+        if plug == values["first_plug"]:
+            raise ValueError(
+                "plugs cannot be equal"
+            )
         return plug
 
 
