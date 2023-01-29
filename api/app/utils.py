@@ -40,16 +40,6 @@ async def apply_dynamic_func_to_file(file: UploadFile, bytes_group: int = 1, fun
 
 
 @alru_cache_typed()
-async def alphabet_to_num(char: str):
-    return ord(char) - OVERHEAD_ASCII
-
-
-@alru_cache_typed()
-async def num_to_alphabet(num: int):
-    return chr(num + OVERHEAD_ASCII)
-
-
-@alru_cache_typed()
 async def char_to_num(char: str):
     return ord(char)
 
