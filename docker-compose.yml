@@ -42,8 +42,6 @@ services:
       API_KEY: ${API_KEY}
       PORT: ${CLIENT_PORT}
     hostname: kripto-client-service
-    ports:
-      - "81:80"
     volumes:
       - ./client:/app
       - /app/node_modules
