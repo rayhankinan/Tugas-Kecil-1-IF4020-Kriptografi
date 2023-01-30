@@ -5,9 +5,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from pydantic import ValidationError
 from .dependencies import verify_api_key
-from .vignere.router import vignere_router
-from .extended_vignere.router import extended_vignere_router
-from .auto_key_vignere.router import auto_key_vignere_router
+from .vigenere.router import vigenere_router
+from .extended_vigenere.router import extended_vigenere_router
+from .auto_key_vigenere.router import auto_key_vigenere_router
 from .affine.router import affine_router
 from .hill.router import hill_router
 from .playfair.router import playfair_router
@@ -32,17 +32,17 @@ app.add_middleware(
 )
 
 app.include_router(
-    vignere_router,
+    vigenere_router,
     dependencies=[Depends(verify_api_key)]
 )
 
 app.include_router(
-    extended_vignere_router,
+    extended_vigenere_router,
     dependencies=[Depends(verify_api_key)]
 )
 
 app.include_router(
-    auto_key_vignere_router,
+    auto_key_vigenere_router,
     dependencies=[Depends(verify_api_key)]
 )
 

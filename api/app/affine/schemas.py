@@ -6,12 +6,10 @@ from ..constants import LENGTH_OF_ALPHABET
 
 
 class AffineFileIn(BaseModel):
-    group: PositiveIntegerType = Form()
     key: PositiveIntegerType = Form()
     shift: PositiveIntegerType = Form()
     file: UploadFile = File()
 
-    # TODO: Cek apakah key relative prime dengan modulo
     @validator("key")
     def relative_prime_key(cls, key: PositiveIntegerType):
         if math.gcd(key, LENGTH_OF_ALPHABET) != 1:

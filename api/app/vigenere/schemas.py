@@ -3,6 +3,6 @@ from pydantic import BaseModel
 from ..utils import AlphabetStringType
 
 
-class AutoKeyVignereFileIn(BaseModel):
+class VigenereFileIn(BaseModel):
     key: AlphabetStringType = Form()
     file: UploadFile = File()

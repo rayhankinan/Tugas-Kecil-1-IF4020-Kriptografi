@@ -3,6 +3,6 @@ from pydantic import BaseModel
 from ..utils import AllStringType
 
 
-class ExtendedVignereFileIn(BaseModel):
+class ExtendedVigenereFileIn(BaseModel):
     key: AllStringType = Form()
     file: UploadFile = File()
