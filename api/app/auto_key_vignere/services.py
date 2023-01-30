@@ -13,7 +13,7 @@ async def encrypt_file_service(key: AlphabetStringType, file: UploadFile):
 
         partitioned_key: int
         if counter < len(key):
-            partitioned_key = await char_to_num(key[counter])
+            partitioned_key = await char_to_num(key[counter]) - OVERHEAD_ASCII
         else:
             await file.seek(counter - len(key))
             past_binary = await file.read(1)
@@ -37,7 +37,7 @@ async def decrypt_file_service(key: AlphabetStringType, file: UploadFile):
 
         partitioned_key: int
         if counter < len(key):
-            partitioned_key = await char_to_num(key[counter])
+            partitioned_key = await char_to_num(key[counter]) - OVERHEAD_ASCII
         else:
             partitioned_key = deq.popleft()
 
