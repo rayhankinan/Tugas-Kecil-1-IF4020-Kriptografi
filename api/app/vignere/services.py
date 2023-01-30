@@ -23,7 +23,7 @@ async def decrypt_file_service(key: AlphabetStringType, file: UploadFile):
         raw_value = await binary_to_num(binary)
         initial_value = raw_value - OVERHEAD_ASCII
         index = counter % len(key)
-        partitioned_key = await char_to_num(key[index])
+        partitioned_key = await char_to_num(key[index]) - OVERHEAD_ASCII
         final_value = (initial_value - partitioned_key) % LENGTH_OF_ALPHABET
         final_bytes = await num_to_binary(final_value + OVERHEAD_ASCII, 1)
         return final_bytes
