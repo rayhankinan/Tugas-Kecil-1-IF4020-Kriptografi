@@ -14,10 +14,11 @@ async def encrypt_file_service(key: AllStringType, file: UploadFile):
     key_matrix = np.array(json_key)
 
     async def encrypt_bytes(binary: AllByteType):
-        initial_matrix = key_matrix[0:len(binary)][0:len(binary)]
+        if len(binary) < len(json_key):
+            return binary
 
         byte_list: List[bytes] = list(
-            unpack(f">{len(binary)}c", binary)
+            unpack(f">{len(json_key)}c", binary)
         )
         num_list: List[int] = []
         for byte in byte_list:
@@ -25,19 +26,15 @@ async def encrypt_file_service(key: AllStringType, file: UploadFile):
             num_list.append(num)
         raw_vector = np.array(num_list)
 
-        remove_overhead = np.vectorize(lambda x: x - OVERHEAD_ASCII)
+        remove_overhead = np.vectorize(lambda x: round(x) - OVERHEAD_ASCII)
         initial_vector: np.ndarray = remove_overhead(raw_vector)
 
-        print(initial_matrix)
+        final_vector: np.ndarray = np.matmul(key_matrix, initial_vector)
 
-        final_vector: np.ndarray = np.matmul(initial_matrix, initial_vector)
-
-        modulo = np.vectorize(lambda x: x % LENGTH_OF_ALPHABET)
+        modulo = np.vectorize(lambda x: round(x) % LENGTH_OF_ALPHABET)
         final_modulo_array: np.ndarray = modulo(final_vector)
 
-        print(final_modulo_array)
-
-        add_overhead = np.vectorize(lambda x: x + OVERHEAD_ASCII)
+        add_overhead = np.vectorize(lambda x: round(x) + OVERHEAD_ASCII)
         result_array: np.ndarray = add_overhead(final_modulo_array)
         final_bytes = result_array.astype("uint8").tobytes()
 
@@ -52,10 +49,11 @@ async def decrypt_file_service(key: AllStringType, file: UploadFile):
     key_matrix = np.array(json_key)
 
     async def decrypt_bytes(binary: AllByteType):
-        initial_matrix = key_matrix[0:len(binary)][0:len(binary)]
+        if len(binary) < len(json_key):
+            return binary
 
         byte_list: List[bytes] = list(
-            unpack(f">{len(binary)}c", binary)
+            unpack(f">{len(json_key)}c", binary)
         )
         num_list: List[int] = []
         for byte in byte_list:
@@ -66,16 +64,14 @@ async def decrypt_file_service(key: AllStringType, file: UploadFile):
         remove_overhead = np.vectorize(lambda x: round(x) - OVERHEAD_ASCII)
         initial_vector: np.ndarray = remove_overhead(raw_vector)
 
-        determinant: float = np.linalg.det(initial_matrix)
-        adjoint_matrix = determinant * np.linalg.inv(initial_matrix)
+        determinant: float = np.linalg.det(key_matrix)
+        adjoint_matrix = determinant * np.linalg.inv(key_matrix)
         inverse_modulo = np.vectorize(
             lambda x: pow(round(determinant), -1, LENGTH_OF_ALPHABET) * x
         )
         inverse_matrix: np.ndarray = inverse_modulo(adjoint_matrix)
-        modulo = np.vectorize(lambda x: x % LENGTH_OF_ALPHABET)
+        modulo = np.vectorize(lambda x: round(x) % LENGTH_OF_ALPHABET)
         inverse_modulo_matrix: np.ndarray = modulo(inverse_matrix)
-
-        print(inverse_modulo_matrix)
 
         final_vector: np.ndarray = np.matmul(
             inverse_modulo_matrix,
@@ -83,8 +79,6 @@ async def decrypt_file_service(key: AllStringType, file: UploadFile):
         )
 
         final_modulo_array: np.ndarray = modulo(final_vector)
-
-        print(final_modulo_array)
 
         add_overhead = np.vectorize(lambda x: round(x) + OVERHEAD_ASCII)
         result_array: np.ndarray = add_overhead(final_modulo_array)
