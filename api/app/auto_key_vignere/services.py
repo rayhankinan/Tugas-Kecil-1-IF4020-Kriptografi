@@ -7,18 +7,18 @@ from ..constants import LENGTH_OF_ALPHABET, OVERHEAD_ASCII
 
 async def encrypt_file_service(key: AlphabetStringType, file: UploadFile):
     # TODO: Add Auto Key Vignere Encryption (Done)
+    deq: Deque[int] = deque(maxlen=len(key)+1)
+
     async def encrypt_bytes(binary: AlphabetByteType, counter: int):
         raw_value = await binary_to_num(binary)
         initial_value = raw_value - OVERHEAD_ASCII
+        deq.append(initial_value)
 
         partitioned_key: int
         if counter < len(key):
             partitioned_key = await char_to_num(key[counter]) - OVERHEAD_ASCII
         else:
-            await file.seek(counter - len(key))
-            past_binary = await file.read(1)
-            raw_key = await binary_to_num(past_binary)
-            partitioned_key = raw_key - OVERHEAD_ASCII
+            partitioned_key = deq.popleft()
 
         final_value = (initial_value + partitioned_key) % LENGTH_OF_ALPHABET
         final_bytes = await num_to_binary(final_value + OVERHEAD_ASCII, 1)
