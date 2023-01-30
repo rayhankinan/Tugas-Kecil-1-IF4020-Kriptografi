@@ -40,6 +40,16 @@ async def decrypt_file_service(key: AllStringType, file: UploadFile):
     json_key: HillKeyType = json.loads(key)
     key_matrix = np.array(json_key)
 
+    determinant: float = np.linalg.det(key_matrix)
+    adjoint_matrix = determinant * np.linalg.inv(key_matrix)
+    inverse_determinant: int = pow(
+        round(determinant),
+        -1,
+        LENGTH_OF_ALPHABET
+    )
+    inverse_modulo = np.vectorize(lambda x: inverse_determinant * x)
+    inverse_matrix: np.ndarray = inverse_modulo(adjoint_matrix)
+
     async def decrypt_bytes(values: List[int]):
         raw_vector = np.array(values)
         add_overhead = np.vectorize(lambda x: round(x) + OVERHEAD_ASCII)
@@ -49,16 +59,6 @@ async def decrypt_file_service(key: AllStringType, file: UploadFile):
             result_array: np.ndarray = add_overhead(raw_vector)
             final_bytes = result_array.astype("uint8").tobytes()
         else:
-            determinant: float = np.linalg.det(key_matrix)
-            adjoint_matrix = determinant * np.linalg.inv(key_matrix)
-            inverse_determinant: int = pow(
-                round(determinant),
-                -1,
-                LENGTH_OF_ALPHABET
-            )
-            inverse_modulo = np.vectorize(lambda x: inverse_determinant * x)
-            inverse_matrix: np.ndarray = inverse_modulo(adjoint_matrix)
-
             final_vector: np.ndarray = np.matmul(inverse_matrix, raw_vector)
 
             modulo = np.vectorize(lambda x: round(x) % LENGTH_OF_ALPHABET)
