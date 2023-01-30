@@ -7,7 +7,7 @@ from ..constants import LENGTH_OF_ALPHABET, OVERHEAD_ASCII
 
 async def encrypt_file_service(key: AlphabetStringType, file: UploadFile):
     # TODO: Add Auto Key Vignere Encryption (Done)
-    deq: Deque[int] = deque(maxlen=len(key)+1)
+    deq: Deque[int] = deque(maxlen=len(key) + 1)
 
     async def encrypt_bytes(binary: AlphabetByteType, counter: int):
         raw_value = await binary_to_num(binary)

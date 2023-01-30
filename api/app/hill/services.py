@@ -14,7 +14,7 @@ async def encrypt_file_service(key: AllStringType, file: UploadFile):
     key_matrix = np.array(json_key)
 
     async def encrypt_bytes(binary: AllByteType):
-        raw_matrix = key_matrix[0:len(binary)][0:len(binary)]
+        initial_matrix = key_matrix[0:len(binary)][0:len(binary)]
 
         byte_list: List[bytes] = list(
             unpack(f">{len(binary)}c", binary)
@@ -23,17 +23,19 @@ async def encrypt_file_service(key: AllStringType, file: UploadFile):
         for byte in byte_list:
             num = await binary_to_num(byte)
             num_list.append(num)
-        raw_vector = np.vstack(num_list)
+        raw_vector = np.array(num_list)
 
         remove_overhead = np.vectorize(lambda x: x - OVERHEAD_ASCII)
-        initial_matrix: np.ndarray = remove_overhead(raw_matrix)
         initial_vector: np.ndarray = remove_overhead(raw_vector)
 
-        final_vector = initial_matrix @ initial_vector
-        final_array = final_vector.transpose()
+        print(initial_matrix)
+
+        final_vector: np.ndarray = np.matmul(initial_matrix, initial_vector)
 
         modulo = np.vectorize(lambda x: x % LENGTH_OF_ALPHABET)
-        final_modulo_array: np.ndarray = modulo(final_array)
+        final_modulo_array: np.ndarray = modulo(final_vector)
+
+        print(final_modulo_array)
 
         add_overhead = np.vectorize(lambda x: x + OVERHEAD_ASCII)
         result_array: np.ndarray = add_overhead(final_modulo_array)
@@ -41,7 +43,7 @@ async def encrypt_file_service(key: AllStringType, file: UploadFile):
 
         return final_bytes
 
-    return apply_static_func_to_file(file, bytes_group=len(key), func=encrypt_bytes)
+    return apply_static_func_to_file(file, bytes_group=len(json_key), func=encrypt_bytes)
 
 
 async def decrypt_file_service(key: AllStringType, file: UploadFile):
@@ -50,7 +52,7 @@ async def decrypt_file_service(key: AllStringType, file: UploadFile):
     key_matrix = np.array(json_key)
 
     async def decrypt_bytes(binary: AllByteType):
-        raw_matrix = key_matrix[0:len(binary)][0:len(binary)]
+        initial_matrix = key_matrix[0:len(binary)][0:len(binary)]
 
         byte_list: List[bytes] = list(
             unpack(f">{len(binary)}c", binary)
@@ -59,29 +61,35 @@ async def decrypt_file_service(key: AllStringType, file: UploadFile):
         for byte in byte_list:
             num = await binary_to_num(byte)
             num_list.append(num)
-        raw_vector = np.vstack(num_list)
+        raw_vector = np.array(num_list)
 
-        remove_overhead = np.vectorize(lambda x: x - OVERHEAD_ASCII)
-        initial_matrix: np.ndarray = remove_overhead(raw_matrix)
+        remove_overhead = np.vectorize(lambda x: round(x) - OVERHEAD_ASCII)
         initial_vector: np.ndarray = remove_overhead(raw_vector)
 
         determinant: float = np.linalg.det(initial_matrix)
         adjoint_matrix = determinant * np.linalg.inv(initial_matrix)
         inverse_modulo = np.vectorize(
-            lambda x: pow(determinant, -1, LENGTH_OF_ALPHABET) * x
+            lambda x: pow(round(determinant), -1, LENGTH_OF_ALPHABET) * x
         )
         inverse_matrix: np.ndarray = inverse_modulo(adjoint_matrix)
-
-        final_vector = inverse_matrix @ initial_vector
-        final_array = final_vector.transpose()
-
         modulo = np.vectorize(lambda x: x % LENGTH_OF_ALPHABET)
-        final_modulo_array: np.ndarray = modulo(final_array)
+        inverse_modulo_matrix: np.ndarray = modulo(inverse_matrix)
 
-        add_overhead = np.vectorize(lambda x: x + OVERHEAD_ASCII)
+        print(inverse_modulo_matrix)
+
+        final_vector: np.ndarray = np.matmul(
+            inverse_modulo_matrix,
+            initial_vector
+        )
+
+        final_modulo_array: np.ndarray = modulo(final_vector)
+
+        print(final_modulo_array)
+
+        add_overhead = np.vectorize(lambda x: round(x) + OVERHEAD_ASCII)
         result_array: np.ndarray = add_overhead(final_modulo_array)
         final_bytes = result_array.astype("uint8").tobytes()
 
         return final_bytes
 
-    return apply_static_func_to_file(file, bytes_group=len(key), func=decrypt_bytes)
+    return apply_static_func_to_file(file, bytes_group=len(json_key), func=decrypt_bytes)
