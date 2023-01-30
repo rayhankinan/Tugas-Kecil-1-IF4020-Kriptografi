@@ -1,22 +1,28 @@
 import numpy as np
+import json
 from struct import unpack
 from typing import List
 from fastapi import UploadFile
 from .utils import HillKeyType
-from ..utils import AllByteType, apply_static_func_to_file
+from ..utils import AllByteType, AllStringType, apply_static_func_to_file, binary_to_num
 from ..constants import LENGTH_OF_ALPHABET, OVERHEAD_ASCII
 
 
-async def encrypt_file_service(key: HillKeyType, file: UploadFile):
+async def encrypt_file_service(key: AllStringType, file: UploadFile):
     # TODO: Add Hill Encryption (Not finished)
+    json_key: HillKeyType = json.loads(key)
+    key_matrix = np.array(json_key)
+
     async def encrypt_bytes(binary: AllByteType):
-        key_matrix = np.array(key)
         raw_matrix = key_matrix[0:len(binary)][0:len(binary)]
 
         byte_list: List[bytes] = list(
             unpack(f">{len(binary)}c", binary)
         )
-        num_list = list(map(int, byte_list))
+        num_list: List[int] = []
+        for byte in byte_list:
+            num = await binary_to_num(byte)
+            num_list.append(num)
         raw_vector = np.vstack(num_list)
 
         remove_overhead = np.vectorize(lambda x: x - OVERHEAD_ASCII)
@@ -38,16 +44,21 @@ async def encrypt_file_service(key: HillKeyType, file: UploadFile):
     return apply_static_func_to_file(file, bytes_group=len(key), func=encrypt_bytes)
 
 
-async def decrypt_file_service(key: HillKeyType, file: UploadFile):
+async def decrypt_file_service(key: AllStringType, file: UploadFile):
     # TODO: Add Hill Decryption (Not finished)
+    json_key: HillKeyType = json.loads(key)
+    key_matrix = np.array(json_key)
+
     async def decrypt_bytes(binary: AllByteType):
-        key_matrix = np.array(key)
         raw_matrix = key_matrix[0:len(binary)][0:len(binary)]
 
         byte_list: List[bytes] = list(
             unpack(f">{len(binary)}c", binary)
         )
-        num_list = list(map(int, byte_list))
+        num_list: List[int] = []
+        for byte in byte_list:
+            num = await binary_to_num(byte)
+            num_list.append(num)
         raw_vector = np.vstack(num_list)
 
         remove_overhead = np.vectorize(lambda x: x - OVERHEAD_ASCII)
