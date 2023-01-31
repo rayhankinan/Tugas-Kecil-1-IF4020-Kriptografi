@@ -28,3 +28,9 @@ def generate_matrix(key: AlphabetStringType):
             base_matrix.insert(0, num)
     return base_matrix
 
+def find_coord(key_matrix: PlayfairKeyType, num: int):
+    for i in range (MATRIX_DIMENSION):
+        for j in range (MATRIX_DIMENSION):
+            if (key_matrix[i][j] == num):
+                return (i, j)
+    return (-1, -1)
