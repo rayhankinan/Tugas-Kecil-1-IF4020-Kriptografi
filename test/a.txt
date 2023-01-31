@@ -1,1 +1,540 @@
-Hai!!! Selamat Siang, Para peserta lomba arkavidia 8.0!
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……
+In my previous article, I talked about how we can easily load tests with the k6 tool. You can find it here. This article will talk about how we can send our test results with k6 to slack.
+
+Metrics are magic for us in these types of tests. Because we can make sense of everything with metrics. These metrics need to be available at all times. There are many methods for this, you can achieve this with the different methods that k6 offers us. You can get an output as JSON or you can see the outputs retrospectively with a time-based database. But slack has become especially important for us developers, we can set up alert mechanisms over slack, we can set up slack-bot or notification systems as we want. In this article, we will add a new one to these systems.
+
+Example of the Basic Script
+This article shows how we can send the metrics we want from the k6 results as a message on slack. First, let’s write a simple test on k6 again.
+
+
+As you can see, we completed our test with a very simple script. Now when you run k6 in this way, it provides us an output via the terminal. But we want to get only certain data through this output. For this, k6 helps us with an excellent function. It allows us to get test results as JS object with handleSummary() function.
+
+Magic of handleSummary() function
+Let’s check it out with an example. As in our example script below, the data parameter automatically provides us with the output from within the function, you can use it the way you want to use the output in this section. For example, you can get a JSON or XML output at the same time, thanks to this function.
+
+
+As I mentioned above, we can normally get the results as JS objects. You can see an example of this in the output below.
+
+
+We make sense of this output and determine the values ​​we want to use. In this article, we will pull Max Throughput, HTTP Failures, Avg Response Time, and VUs values ​​from this object as an example. We have defined the metrics we want from the data object as follows.
+
+
+Custom Slack Integration
+Now let’s come to the best part of the job and create and send a custom message with slack. Here we will benefit from Slack API and Slack Block Kit Builder. First of all, we create a message template via Slack Block Kit Builder in a simple way. Then we copy this template and assign it to a variable called payload. Because this variable will be the payload that we will send through the Slack API.
+
+Here you can find the use of Slack API and Slack Block Kit Builder.
+
+
+After making the definition, we create a simple function and send a Slack API request. Before doing this, create a bot and you must transmit your bot token as a bearer token in the Authorization HTTP header. You can find more detailed procedures in the slack document.
+
+
+As you can see in the function below, we first change the message we will send in the payload we defined according to our own metrics.
+
+
+And finally, we send the slack API request. Now we call this slack function from handleSummary() and we get our slack message.
+
+
+Let’s see the result……

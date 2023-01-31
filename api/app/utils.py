@@ -4,6 +4,7 @@ from fastapi import UploadFile
 from pydantic import conbytes, conint, constr
 from .lib import alru_cache_typed
 from .constants import LENGTH_OF_ALPHABET, OVERHEAD_ASCII, UPPERCASE_ASCII
+from .playfair.constants import X_INDEX
 
 AllStringType: Type[str] = constr(min_length=1)
 AllByteType: Type[bytes] = conbytes(
@@ -11,7 +12,7 @@ AllByteType: Type[bytes] = conbytes(
 )
 AlphabetStringType: Type[str] = constr(
     min_length=1,
-    regex=r"^[A-Za-z]+$",
+    regex=r"^[A-Za-z ]+$",
     to_lower=True,
     strip_whitespace=True
 )
@@ -45,6 +46,27 @@ async def apply_static_func_to_file(file: UploadFile, bytes_group: int = 1, func
             if (bytes_group == 1):
                 yield await func(array_ascii[0])
             else:
+                yield await func(array_ascii)
+
+async def apply_static_playfair_to_file(file: UploadFile, func: Callable[[any], Coroutine[any, any, bytes]] = lambda x: x):
+    end_of_file : bool = False
+    while not end_of_file:
+        array_ascii = []
+        while len(array_ascii) != 2:
+            chunk = await file.read(1)
+            if chunk == b'':
+                end_of_file = True
+                if (len(array_ascii) == 1):
+                    array_ascii.append(X_INDEX)
+                break
+            num = await alphabet_ascii(chunk)
+            if num != -1:
+                if (len(array_ascii) != 0 and num == array_ascii[0]):
+                    array_ascii.append(X_INDEX)
+                    yield await func(array_ascii)
+                    array_ascii = []
+                array_ascii.append(num)
+            if len(array_ascii) == 2:
                 yield await func(array_ascii)
 
 
