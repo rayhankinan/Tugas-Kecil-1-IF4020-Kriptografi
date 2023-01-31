@@ -1,5 +1,5 @@
 from fastapi import UploadFile
-from ..utils import AlphabetStringType, AlphabetByteType, apply_dynamic_func_to_file, apply_dynamic_extvig_to_file, binary_to_num, num_to_binary, char_to_num
+from ..utils import AlphabetStringType, apply_dynamic_func_to_file, apply_dynamic_extvig_to_file, binary_to_num, num_to_binary, char_to_num
 from ..constants import LENGTH_OF_ALPHABET, OVERHEAD_ASCII
 
 

@@ -6,10 +6,11 @@ from ..constants import LENGTH_OF_ALPHABET, OVERHEAD_ASCII
 
 
 async def encrypt_file_service(key: AlphabetStringType, file: UploadFile):
-    deq: Deque[int] = deque(maxlen=len(key)+1)
+    deq: Deque[int] = deque(maxlen=len(key) + 1)
 
     async def encrypt_bytes(value: int, counter: int):
         deq.append(value)
+
         partitioned_key: int
         if counter < len(key):
             partitioned_key = await char_to_num(key[counter]) - OVERHEAD_ASCII
