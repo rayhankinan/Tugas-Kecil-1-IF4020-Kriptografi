@@ -25,12 +25,11 @@ interface PageLink {
 
 const NavigationBar: React.FC = () => {
   const [drawerOpened, setDrawerOpened] = React.useState(false);
+  const navigate = useNavigate();
 
   const toggleDrawer = () => {
     setDrawerOpened(!drawerOpened);
   };
-
-  const navigate = useNavigate();
 
   const pageLinks: PageLink[] = [
     {

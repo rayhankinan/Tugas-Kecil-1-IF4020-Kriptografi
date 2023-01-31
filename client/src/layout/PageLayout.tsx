@@ -12,7 +12,7 @@ const PageLayout: PageLayoutComponent = (props: PageLayoutProps) => {
   return (
     <React.Fragment>
       <NavigationBar />
-      <Container maxWidth="xl">{props.children}</Container>
+      <Container maxWidth="lg">{props.children}</Container>
     </React.Fragment>
   );
 };
