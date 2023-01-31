@@ -6,7 +6,9 @@ interface PageLayoutProps {
   children?: JSX.Element | JSX.Element[] | string | string[];
 }
 
-const PageLayout: React.FC = (props: PageLayoutProps) => {
+type PageLayoutComponent = ({}: PageLayoutProps) => JSX.Element;
+
+const PageLayout: PageLayoutComponent = (props: PageLayoutProps) => {
   return (
     <Container maxWidth="xl">
       <NavigationBar />
