@@ -10,10 +10,10 @@ type PageLayoutComponent = ({}: PageLayoutProps) => JSX.Element;
 
 const PageLayout: PageLayoutComponent = (props: PageLayoutProps) => {
   return (
-    <Container maxWidth="xl">
+    <React.Fragment>
       <NavigationBar />
-      {props.children}
-    </Container>
+      <Container maxWidth="xl">{props.children}</Container>
+    </React.Fragment>
   );
 };
 

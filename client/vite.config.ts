@@ -9,6 +9,10 @@ export default ({ mode }) => {
   return defineConfig({
     plugins: [react(), tsconfigPaths()],
     server: {
+      hmr: {
+        host: "localhost",
+      },
+      strictPort: true,
       port: +process.env.PORT || 80,
     },
   });
