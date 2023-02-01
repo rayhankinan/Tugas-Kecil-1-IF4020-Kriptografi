@@ -1,40 +1,7 @@
 import Axios, { AxiosError } from "axios";
-import stream from "stream";
 import fs from "fs";
-
-interface APIErrorDetail {
-  loc: string[];
-  msg: string;
-  type: string;
-}
-
-interface APIError {
-  detail: APIErrorDetail[];
-}
-
-class FileStream extends stream.Writable {
-  private readonly fileBits: BlobPart[];
-  private readonly fileName: string;
-
-  constructor(fileName: string) {
-    super();
-    this.fileBits = [];
-    this.fileName = fileName;
-  }
-
-  _write(
-    chunk: any,
-    encoding: BufferEncoding,
-    callback: (error?: Error | null | undefined) => void
-  ): void {
-    this.fileBits.push(chunk as BlobPart);
-    callback();
-  }
-
-  getFile() {
-    return new File(this.fileBits, this.fileName);
-  }
-}
+import APIError from "@utils/api-error";
+import FileStream from "@utils/file-stream";
 
 class APIClient {
   public static readonly API_HOST = process.env.API_HOST || "localhost";
