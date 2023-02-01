@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { Download as DownloadIcon } from "@mui/icons-material";
-import useDownloadFile from "@hooks/DownloadFile";
+import useDownloadFile from "@hooks/download-file";
 
 interface DownloadFileButtonProps {
   fileOutput: File | undefined;
