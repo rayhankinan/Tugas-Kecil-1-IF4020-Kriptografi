@@ -1,7 +1,7 @@
 import React from "react";
 
 interface DownloadFileProps {
-  file: File | null;
+  fileOutput: File | undefined;
 }
 
 interface DownloadFileInfo {
@@ -19,13 +19,13 @@ const useDownloadFile: DownloadFileHook = (props: DownloadFileProps) => {
   const [url, setFileUrl] = React.useState<string>();
 
   const download = async () => {
-    if (!props.file) {
+    if (!props.fileOutput) {
       return;
     }
 
-    const url = URL.createObjectURL(props.file);
+    const url = URL.createObjectURL(props.fileOutput);
     setFileUrl(url);
-    setFileName(props.file.name);
+    setFileName(props.fileOutput.name);
     ref.current?.click();
     URL.revokeObjectURL(url);
   };

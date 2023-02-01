@@ -15,8 +15,8 @@ import {
 } from "@mui/material";
 import {
   Menu as MenuIcon,
-  EnhancedEncryption as EnhancedEncryptionIcon,
-  EnhancedEncryptionOutlined as EnhancedEncryptionOutlinedIcon,
+  Lock as LockIcon,
+  LockOutlined as LockIconOutlined,
 } from "@mui/icons-material";
 
 interface PageLink {
@@ -70,11 +70,7 @@ const NavigationBar: React.FC = () => {
           <ListItem key={pageLink.name} disablePadding>
             <ListItemButton onClick={() => navigate(pageLink.url)}>
               <ListItemIcon>
-                {index % 2 === 0 ? (
-                  <EnhancedEncryptionIcon />
-                ) : (
-                  <EnhancedEncryptionOutlinedIcon />
-                )}
+                {index % 2 === 0 ? <LockIcon /> : <LockIconOutlined />}
               </ListItemIcon>
               <ListItemText primary={pageLink.name} />
             </ListItemButton>

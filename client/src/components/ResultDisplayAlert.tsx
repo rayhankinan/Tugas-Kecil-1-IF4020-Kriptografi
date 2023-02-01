@@ -1,11 +1,10 @@
 import React from "react";
 import { Alert, Snackbar } from "@mui/material";
-
-type Severity = "error" | "success";
+import Severity from "@defined/severity";
 
 interface ResultDisplayAlertProps {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  openAlert: boolean;
+  setOpenAlert: React.Dispatch<React.SetStateAction<boolean>>;
   severity: Severity;
   message: string;
 }
@@ -16,11 +15,15 @@ const ResultDisplayAlert: ResultDisplayAlertComponent = (
   props: ResultDisplayAlertProps
 ) => {
   const handleClose = () => {
-    props.setOpen(false);
+    props.setOpenAlert(false);
   };
 
   return (
-    <Snackbar open={props.open} autoHideDuration={1000} onClose={handleClose}>
+    <Snackbar
+      open={props.openAlert}
+      autoHideDuration={1000}
+      onClose={handleClose}
+    >
       <Alert
         onClose={handleClose}
         severity={props.severity}

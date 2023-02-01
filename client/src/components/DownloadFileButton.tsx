@@ -3,7 +3,7 @@ import { Download as DownloadIcon } from "@mui/icons-material";
 import useDownloadFile from "@hooks/DownloadFile";
 
 interface DownloadFileButtonProps {
-  file: File | null;
+  fileOutput: File | undefined;
 }
 
 type DownloadFileButtonComponent = ({}: DownloadFileButtonProps) => JSX.Element;
@@ -11,7 +11,9 @@ type DownloadFileButtonComponent = ({}: DownloadFileButtonProps) => JSX.Element;
 const DownloadFileButton: DownloadFileButtonComponent = (
   props: DownloadFileButtonProps
 ) => {
-  const { ref, name, url, download } = useDownloadFile({ file: props.file });
+  const { ref, name, url, download } = useDownloadFile({
+    fileOutput: props.fileOutput,
+  });
 
   return (
     <Button

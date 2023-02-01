@@ -25,13 +25,12 @@ class APIClient {
   public static async Post(
     path: string,
     query: Record<string, string>,
-    body: Record<string, File>,
-    fileName: string
+    file: File
   ): Promise<File | APIError> {
     try {
       const response = await Axios.post<fs.ReadStream>(
         `${APIClient.API_HOST}${path}`,
-        body,
+        { file },
         {
           params: {
             access_token: APIClient.API_KEY,
@@ -41,7 +40,7 @@ class APIClient {
         }
       );
 
-      const fileStream = new FileStream(fileName);
+      const fileStream = new FileStream(file.name);
       response.data.pipe(fileStream);
 
       return fileStream.getFile();

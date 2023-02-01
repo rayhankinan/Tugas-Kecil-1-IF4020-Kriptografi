@@ -6,8 +6,8 @@ import {
 } from "@mui/icons-material";
 
 interface UploadFileButtonProps {
-  file: File | null;
-  setFile: React.Dispatch<React.SetStateAction<File | null>>;
+  fileInput: File | undefined;
+  setFileInput: React.Dispatch<React.SetStateAction<File | undefined>>;
 }
 
 type UploadFileButtonComponent = ({}: UploadFileButtonProps) => JSX.Element;
@@ -20,16 +20,16 @@ const UploadFileButton: UploadFileButtonComponent = (
     const selectedFiles = files as FileList;
     const currentFile = selectedFiles?.[0];
 
-    props.setFile(currentFile);
+    props.setFileInput(currentFile);
   };
 
   return (
     <Button
       variant="contained"
       component="label"
-      startIcon={props.file ? <AttachmentIcon /> : <UploadIcon />}
+      startIcon={props.fileInput ? <AttachmentIcon /> : <UploadIcon />}
     >
-      {props.file ? props.file.name : "Upload"}
+      {props.fileInput ? props.fileInput.name : "Upload"}
       <input hidden type="file" onChange={handleUpload} />
     </Button>
   );
