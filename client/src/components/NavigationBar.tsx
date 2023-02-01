@@ -16,6 +16,7 @@ import {
 import {
   Menu as MenuIcon,
   EnhancedEncryption as EnhancedEncryptionIcon,
+  EnhancedEncryptionOutlined as EnhancedEncryptionOutlinedIcon,
 } from "@mui/icons-material";
 
 interface PageLink {
@@ -65,11 +66,15 @@ const NavigationBar: React.FC = () => {
   const generateList = (pageLinks: PageLink[]) => {
     return (
       <List>
-        {pageLinks.map((pageLink) => (
+        {pageLinks.map((pageLink, index) => (
           <ListItem key={pageLink.name} disablePadding>
             <ListItemButton onClick={() => navigate(pageLink.url)}>
               <ListItemIcon>
-                <EnhancedEncryptionIcon />
+                {index % 2 === 0 ? (
+                  <EnhancedEncryptionIcon />
+                ) : (
+                  <EnhancedEncryptionOutlinedIcon />
+                )}
               </ListItemIcon>
               <ListItemText primary={pageLink.name} />
             </ListItemButton>

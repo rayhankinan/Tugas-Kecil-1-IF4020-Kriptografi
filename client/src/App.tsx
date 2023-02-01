@@ -4,31 +4,29 @@ import { StyledEngineProvider } from "@mui/material/styles";
 import { CircularProgress, CssBaseline } from "@mui/material";
 import Routing from "./routing";
 
-function App() {
+const App = () => {
   return (
-    <Suspense fallback={<CircularProgress />}>
-      <BrowserRouter>
-        <Routes>
-          {Routing.map((route) => {
-            const Component = route.component;
-            return (
-              <Route
-                caseSensitive
-                path={route.path}
-                key={route.path}
-                element={
-                  <StyledEngineProvider injectFirst>
-                    <CssBaseline />
-                    <Component />
-                  </StyledEngineProvider>
-                }
-              />
-            );
-          })}
-        </Routes>
-      </BrowserRouter>
-    </Suspense>
+    <StyledEngineProvider injectFirst>
+      <CssBaseline />
+      <Suspense fallback={<CircularProgress />}>
+        <BrowserRouter>
+          <Routes>
+            {Routing.map((route) => {
+              const Component = route.component;
+              return (
+                <Route
+                  caseSensitive
+                  path={route.path}
+                  key={route.path}
+                  element={<Component />}
+                />
+              );
+            })}
+          </Routes>
+        </BrowserRouter>
+      </Suspense>
+    </StyledEngineProvider>
   );
-}
+};
 
 export default App;
