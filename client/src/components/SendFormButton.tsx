@@ -6,7 +6,6 @@ import {
 } from "@mui/icons-material";
 import Severity from "@defined/severity";
 import APIClient from "@utils/api-client";
-import APIError from "@utils/api-error";
 
 interface SendFormButtonProps {
   path: string;

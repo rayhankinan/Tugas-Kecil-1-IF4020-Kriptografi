@@ -2,8 +2,8 @@ import React from "react";
 import { Box, TextField } from "@mui/material";
 
 interface UploadDisplayTextProps {
-  displayText: string;
-  setDisplayText: React.Dispatch<React.SetStateAction<string>>;
+  displayText: string | undefined;
+  setDisplayText: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 type UploadDisplayTextComponent = ({}: UploadDisplayTextProps) => JSX.Element;
