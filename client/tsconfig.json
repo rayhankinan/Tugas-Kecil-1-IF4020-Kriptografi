@@ -17,12 +17,10 @@
     "jsx": "react-jsx",
     "types": ["node"],
     "paths": {
-      "@assets/*": ["./src/services/*"],
       "@components/*": ["./src/components/*"],
-      "@enum/*": ["./src/enum/*"],
+      "@hooks/*": ["./src/hooks/*"],
       "@layout/*": ["./src/layout/*"],
       "@pages/*": ["./src/pages/*"],
-      "@services/*": ["./src/services/*"],
       "@utils/*": ["./src/utils/*"]
     }
   },
