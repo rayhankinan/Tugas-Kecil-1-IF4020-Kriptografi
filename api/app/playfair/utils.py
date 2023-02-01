@@ -1,3 +1,4 @@
+import numpy
 from typing import List, Type
 from pydantic import conlist
 from ..lib import alru_cache_typed
@@ -15,10 +16,11 @@ PlayfairKeyType: Type[List[List[int]]] = conlist(
     max_items=MATRIX_DIMENSION
 )
 
+
 @alru_cache_typed()
 async def generate_matrix(key: AlphabetStringType):
     set_key = []
-    base_matrix = [i for i in range (LENGTH_OF_ALPHABET)]
+    base_matrix = [i for i in range(LENGTH_OF_ALPHABET)]
     del base_matrix[J_INDEX]
 
     key = key.replace('j', '')
@@ -35,9 +37,10 @@ async def generate_matrix(key: AlphabetStringType):
 
     return set_key
 
-def find_coord(key_matrix, num: int):
-    for i in range (MATRIX_DIMENSION):
-        for j in range (MATRIX_DIMENSION):
+
+def find_coord(key_matrix: numpy.ndarray, num: int):
+    for i in range(MATRIX_DIMENSION):
+        for j in range(MATRIX_DIMENSION):
             if (key_matrix[i][j] == num):
                 return (i, j)
     return (-1, -1)
