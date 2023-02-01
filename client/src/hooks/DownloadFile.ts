@@ -4,12 +4,12 @@ interface DownloadFileProps {
   fileOutput: File | undefined;
 }
 
-interface DownloadFileInfo {
-  ref: React.MutableRefObject<HTMLAnchorElement | null>;
-  name: string | undefined;
-  url: string | undefined;
-  download: () => Promise<void>;
-}
+type DownloadFileInfo = [
+  ref: React.MutableRefObject<HTMLAnchorElement | null>,
+  name: string | undefined,
+  url: string | undefined,
+  download: () => Promise<void>
+];
 
 type DownloadFileHook = ({}: DownloadFileProps) => DownloadFileInfo;
 
@@ -28,7 +28,7 @@ const useDownloadFile: DownloadFileHook = (props: DownloadFileProps) => {
     URL.revokeObjectURL(url);
   };
 
-  return { ref, name, url, download };
+  return [ref, name, url, download];
 };
 
 export default useDownloadFile;

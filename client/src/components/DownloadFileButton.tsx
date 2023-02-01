@@ -9,7 +9,7 @@ interface DownloadFileButtonProps {
 const DownloadFileButton: React.FC<DownloadFileButtonProps> = (
   props: DownloadFileButtonProps
 ) => {
-  const { ref, name, url, download } = useDownloadFile({
+  const [ref, name, url, download] = useDownloadFile({
     fileOutput: props.fileOutput,
   });
 
