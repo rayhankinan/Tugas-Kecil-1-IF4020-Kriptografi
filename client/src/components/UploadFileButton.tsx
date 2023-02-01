@@ -10,9 +10,7 @@ interface UploadFileButtonProps {
   setFileInput: React.Dispatch<React.SetStateAction<File | undefined>>;
 }
 
-type UploadFileButtonComponent = ({}: UploadFileButtonProps) => JSX.Element;
-
-const UploadFileButton: UploadFileButtonComponent = (
+const UploadFileButton: React.FC<UploadFileButtonProps> = (
   props: UploadFileButtonProps
 ) => {
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {

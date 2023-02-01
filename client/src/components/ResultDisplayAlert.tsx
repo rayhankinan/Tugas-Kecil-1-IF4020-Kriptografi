@@ -9,9 +9,7 @@ interface ResultDisplayAlertProps {
   message: string;
 }
 
-type ResultDisplayAlertComponent = ({}: ResultDisplayAlertProps) => JSX.Element;
-
-const ResultDisplayAlert: ResultDisplayAlertComponent = (
+const ResultDisplayAlert: React.FC<ResultDisplayAlertProps> = (
   props: ResultDisplayAlertProps
 ) => {
   const handleClose = () => {

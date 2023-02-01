@@ -6,9 +6,7 @@ interface UploadDisplayTextProps {
   setDisplayText: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
-type UploadDisplayTextComponent = ({}: UploadDisplayTextProps) => JSX.Element;
-
-const UploadDisplayText: UploadDisplayTextComponent = (
+const UploadDisplayText: React.FC<UploadDisplayTextProps> = (
   props: UploadDisplayTextProps
 ) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

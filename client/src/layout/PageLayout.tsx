@@ -6,9 +6,7 @@ interface PageLayoutProps {
   children?: JSX.Element | JSX.Element[] | string | string[];
 }
 
-type PageLayoutComponent = ({}: PageLayoutProps) => JSX.Element;
-
-const PageLayout: PageLayoutComponent = (props: PageLayoutProps) => {
+const PageLayout: React.FC<PageLayoutProps> = (props: PageLayoutProps) => {
   return (
     <React.Fragment>
       <NavigationBar />

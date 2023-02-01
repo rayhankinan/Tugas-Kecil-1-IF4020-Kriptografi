@@ -6,9 +6,7 @@ interface DownloadFileButtonProps {
   fileOutput: File | undefined;
 }
 
-type DownloadFileButtonComponent = ({}: DownloadFileButtonProps) => JSX.Element;
-
-const DownloadFileButton: DownloadFileButtonComponent = (
+const DownloadFileButton: React.FC<DownloadFileButtonProps> = (
   props: DownloadFileButtonProps
 ) => {
   const { ref, name, url, download } = useDownloadFile({

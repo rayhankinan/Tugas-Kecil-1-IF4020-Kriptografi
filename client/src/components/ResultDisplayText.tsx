@@ -6,9 +6,7 @@ interface ResultDisplayTextProps {
   isSeparated: boolean;
 }
 
-type ResultDisplayTextComponent = ({}: ResultDisplayTextProps) => JSX.Element;
-
-const ResultDisplayText: ResultDisplayTextComponent = (
+const ResultDisplayText: React.FC<ResultDisplayTextProps> = (
   props: ResultDisplayTextProps
 ) => {
   const processText = () => {

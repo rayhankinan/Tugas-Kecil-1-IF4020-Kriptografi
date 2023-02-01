@@ -19,9 +19,7 @@ interface SendFormButtonProps {
   setMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-type SendFormButtonComponent = ({}: SendFormButtonProps) => JSX.Element;
-
-const SendFormButton: SendFormButtonComponent = (
+const SendFormButton: React.FC<SendFormButtonProps> = (
   props: SendFormButtonProps
 ) => {
   const handleSend = async () => {
