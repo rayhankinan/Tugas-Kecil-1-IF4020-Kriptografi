@@ -17,7 +17,6 @@ const UploadDisplayText: React.FC<UploadDisplayTextProps> = (
   return (
     <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
       <TextField
-        label="Text Input"
         multiline
         fullWidth
         rows={10}

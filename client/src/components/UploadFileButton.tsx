@@ -14,6 +14,8 @@ const UploadFileButton: React.FC<UploadFileButtonProps> = (
   props: UploadFileButtonProps
 ) => {
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.setFileInput(undefined); // TODO: REMOVE THIS IN THE FUTURE
+
     const { files } = event.target;
     const selectedFiles = files as FileList;
     const currentFile = selectedFiles?.[0];

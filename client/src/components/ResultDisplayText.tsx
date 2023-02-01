@@ -10,9 +10,7 @@ const ResultDisplayText: React.FC<ResultDisplayTextProps> = (
   props: ResultDisplayTextProps
 ) => {
   const processText = () => {
-    if (!props.displayText) {
-      return;
-    }
+    if (!props.displayText) return;
 
     return props.isSeparated
       ? props.displayText.replace(/(.{5})/g, "$1 ")
@@ -22,7 +20,6 @@ const ResultDisplayText: React.FC<ResultDisplayTextProps> = (
   return (
     <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
       <TextField
-        label="Text Input"
         multiline
         fullWidth
         rows={10}

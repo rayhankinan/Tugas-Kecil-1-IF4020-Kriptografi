@@ -19,9 +19,7 @@ const useDownloadFile: DownloadFileHook = (props: DownloadFileProps) => {
   const [url, setFileUrl] = React.useState<string>();
 
   const download = async () => {
-    if (!props.fileOutput) {
-      return;
-    }
+    if (!props.fileOutput) return;
 
     const url = URL.createObjectURL(props.fileOutput);
     setFileUrl(url);

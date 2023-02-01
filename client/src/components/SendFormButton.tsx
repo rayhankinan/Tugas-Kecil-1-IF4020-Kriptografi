@@ -23,9 +23,7 @@ const SendFormButton: React.FC<SendFormButtonProps> = (
   props: SendFormButtonProps
 ) => {
   const handleSend = async () => {
-    if (!props.fileInput) {
-      return;
-    }
+    if (!props.fileInput) return;
 
     props.setLoading(true);
     const response = await APIClient.Post(
@@ -36,6 +34,8 @@ const SendFormButton: React.FC<SendFormButtonProps> = (
     props.setLoading(false);
 
     if (response instanceof File) {
+      props.setFileOutput(undefined); // TODO: REMOVE THIS IN THE FUTURE
+
       const message = `${response.name} berhasil diproses!`;
 
       props.setFileOutput(response);
@@ -43,12 +43,13 @@ const SendFormButton: React.FC<SendFormButtonProps> = (
       props.setMessage(message);
       props.setOpenAlert(true);
     } else {
+      props.setFileOutput(undefined); // TODO: REMOVE THIS IN THE FUTURE
+
       const { detail: listOfDetails } = response;
       const detail = listOfDetails[0];
       const { loc, msg, type } = detail;
       const message = `${type}: ${msg} (in ${loc.join(", ")})`;
 
-      props.setFileOutput(undefined);
       props.setSeverity("error");
       props.setMessage(message);
       props.setOpenAlert(true);
