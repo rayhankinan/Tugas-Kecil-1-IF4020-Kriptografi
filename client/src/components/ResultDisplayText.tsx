@@ -22,7 +22,7 @@ const ResultDisplayText: React.FC<ResultDisplayTextProps> = ({
         multiline
         fullWidth
         rows={10}
-        defaultValue={processText()}
+        value={processText()}
         variant="standard"
         InputProps={{
           readOnly: true,

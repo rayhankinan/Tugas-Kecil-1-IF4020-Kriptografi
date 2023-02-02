@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 
 const deepCompareEquals = (value: any, other: any) => {
-  return _.isEqual(value, other);
+  return _.isEqual(value, other); // TODO: Tidak terdeteksi perubahan apabila nama file sama
 };
 
 const useDeepCompareMemoize = (value: any) => {
