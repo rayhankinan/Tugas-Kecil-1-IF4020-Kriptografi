@@ -1,4 +1,5 @@
 import React from "react";
+import { Container, Stack } from "@mui/material";
 import PageLayout from "@layout/PageLayout";
 import useDeepCompareEffect from "@hooks/deep-compare-effect";
 import UploadDisplayText from "@components/UploadDisplayText";
@@ -22,11 +23,16 @@ const Affine: React.FC = () => {
 
   return (
     <PageLayout>
-      <UploadDisplayText
-        displayText={displayText}
-        setDisplayText={setDisplayText}
-      />
-      <UploadFileButton fileInput={fileInput} setFileInput={setFileInput} />
+      <Stack direction="row" spacing={2}>
+        <Container maxWidth="lg">
+          <UploadDisplayText
+            displayText={displayText}
+            setDisplayText={setDisplayText}
+          />
+          <UploadFileButton fileInput={fileInput} setFileInput={setFileInput} />
+        </Container>
+        <Container maxWidth="lg">{/* Output */}</Container>
+      </Stack>
     </PageLayout>
   );
 };

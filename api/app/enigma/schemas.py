@@ -8,6 +8,7 @@ class EnigmaFileIn(BaseModel):
     rotor_order: RotorOrderListType = Form()
     notch_setting: AlphabetListType = Form()
     start_position: AlphabetListType = Form()
+    # TODO: Migrate ini menjadi tipe json string
     list_of_plugboard: PlugboardConnectionListType = Form()
     file: UploadFile = File()
 
