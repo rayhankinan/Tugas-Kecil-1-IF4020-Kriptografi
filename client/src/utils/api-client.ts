@@ -4,8 +4,9 @@ import APIError from "@utils/api-error";
 import TempFile from "@utils/create-temp-file";
 
 class APIClient {
-  public static readonly API_HOST = process.env.API_HOST || "localhost";
-  public static readonly API_KEY = process.env.API_KEY || "api-key";
+  public static readonly API_HOST =
+    import.meta.env.VITE_API_HOST || "localhost";
+  public static readonly API_KEY = import.meta.env.VITE_API_KEY || "api-key";
 
   private static HandleError(rawError: any): APIError {
     const emptyError: APIError = {

@@ -13,7 +13,7 @@ export default ({ mode }) => {
         host: "localhost",
       },
       strictPort: true,
-      port: +process.env.PORT || 80,
+      port: +process.env.VITE_PORT || 80,
     },
   });
 };
