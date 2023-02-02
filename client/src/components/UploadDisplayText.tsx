@@ -12,6 +12,7 @@ const UploadDisplayText: React.FC<UploadDisplayTextProps> = ({
 }: UploadDisplayTextProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
+
     setDisplayText(value);
   };
 
