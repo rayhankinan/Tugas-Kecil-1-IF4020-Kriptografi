@@ -13,17 +13,19 @@ type DownloadFileInfo = [
 
 type DownloadFileHook = ({}: DownloadFileProps) => DownloadFileInfo;
 
-const useDownloadFile: DownloadFileHook = (props: DownloadFileProps) => {
+const useDownloadFile: DownloadFileHook = ({
+  fileOutput,
+}: DownloadFileProps) => {
   const ref = React.useRef<HTMLAnchorElement | null>(null);
   const [name, setFileName] = React.useState<string>();
   const [url, setFileUrl] = React.useState<string>();
 
   const download = async () => {
-    if (!props.fileOutput) return;
+    if (!fileOutput) return;
 
-    const url = URL.createObjectURL(props.fileOutput);
+    const url = URL.createObjectURL(fileOutput);
     setFileUrl(url);
-    setFileName(props.fileOutput.name);
+    setFileName(fileOutput.name);
     ref.current?.click();
     URL.revokeObjectURL(url);
   };

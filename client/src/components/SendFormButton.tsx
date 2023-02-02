@@ -1,54 +1,89 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import {
   Lock as LockIcon,
   LockOpen as LockOpenIcon,
 } from "@mui/icons-material";
-import Severity from "@defined/severity";
+import { AxiosProgressEvent } from "axios";
 import APIClient from "@utils/api-client";
+import AlertProps from "@interface/alert-props";
 
 interface SendFormButtonProps {
   path: string;
   isEncrypt: boolean;
   query: Record<string, string>;
   fileInput: File | undefined;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setFileOutput: React.Dispatch<React.SetStateAction<File | undefined>>;
-  setOpenAlert: React.Dispatch<React.SetStateAction<boolean>>;
-  setSeverity: React.Dispatch<React.SetStateAction<Severity>>;
-  setMessage: React.Dispatch<React.SetStateAction<string>>;
+  setAlert: React.Dispatch<React.SetStateAction<AlertProps | undefined>>;
 }
 
-const SendFormButton: React.FC<SendFormButtonProps> = (
-  props: SendFormButtonProps
-) => {
-  const handleSend = async () => {
-    if (!props.fileInput) return;
+const SendFormButton: React.FC<SendFormButtonProps> = ({
+  path,
+  isEncrypt,
+  query,
+  fileInput,
+  setFileOutput,
+  setAlert,
+}: SendFormButtonProps) => {
+  const [progressUpload, setProgressUpload] = React.useState<number>(100);
 
-    props.setLoading(true);
+  const handleSend = async () => {
+    if (!fileInput) return;
+
+    setProgressUpload(0);
     const response = await APIClient.Post(
-      props.path,
-      props.query,
-      props.fileInput
+      path,
+      query,
+      fileInput,
+      (progressEvent: AxiosProgressEvent) => {
+        if (!progressEvent.total) return;
+
+        setProgressUpload(
+          Math.round(100 * progressEvent.loaded) / progressEvent.total
+        );
+      }
     );
-    props.setLoading(false);
 
     if (response instanceof File) {
       const message = `${response.name} berhasil diproses!`;
 
-      props.setFileOutput(response);
-      props.setSeverity("success");
-      props.setMessage(message);
-      props.setOpenAlert(true);
+      setFileOutput(response);
+      setAlert({
+        openAlert: true,
+        message,
+        severity: "success",
+      });
     } else {
       const { detail: listOfDetails } = response;
       const detail = listOfDetails[0];
       const { loc, msg, type } = detail;
       const message = `${type}: ${msg} (in ${loc.join(", ")})`;
 
-      props.setSeverity("error");
-      props.setMessage(message);
-      props.setOpenAlert(true);
+      setAlert({
+        openAlert: true,
+        message,
+        severity: "error",
+      });
+    }
+  };
+
+  const getStartIcon = () => {
+    if (progressUpload < 100) {
+      return <CircularProgress value={progressUpload} />;
+    } else if (isEncrypt) {
+      return <LockIcon />;
+    } else {
+      return <LockOpenIcon />;
+    }
+  };
+
+  const getMessage = () => {
+    if (progressUpload < 100) {
+      return "Uploading";
+    } else if (isEncrypt) {
+      return "Encrypt";
+    } else {
+      return "Decrypt";
     }
   };
 
@@ -56,10 +91,10 @@ const SendFormButton: React.FC<SendFormButtonProps> = (
     <Button
       variant="contained"
       component="label"
-      startIcon={props.isEncrypt ? <LockIcon /> : <LockOpenIcon />}
+      startIcon={getStartIcon()}
       onClick={handleSend}
     >
-      {props.isEncrypt ? "Encrypt" : "Decrypt"}
+      {getMessage()}
     </Button>
   );
 };

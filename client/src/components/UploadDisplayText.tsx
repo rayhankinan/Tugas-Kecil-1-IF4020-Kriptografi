@@ -6,12 +6,13 @@ interface UploadDisplayTextProps {
   setDisplayText: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
-const UploadDisplayText: React.FC<UploadDisplayTextProps> = (
-  props: UploadDisplayTextProps
-) => {
+const UploadDisplayText: React.FC<UploadDisplayTextProps> = ({
+  displayText,
+  setDisplayText,
+}: UploadDisplayTextProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    props.setDisplayText(value);
+    setDisplayText(value);
   };
 
   return (
@@ -20,8 +21,8 @@ const UploadDisplayText: React.FC<UploadDisplayTextProps> = (
         multiline
         fullWidth
         rows={10}
-        value={props.displayText}
         variant="standard"
+        value={displayText}
         onChange={handleChange}
       />
     </Box>

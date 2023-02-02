@@ -18,14 +18,10 @@ import {
   Lock as LockIcon,
   LockOutlined as LockIconOutlined,
 } from "@mui/icons-material";
-
-interface PageLink {
-  name: string;
-  url: string;
-}
+import PageLink from "@interface/page-link";
 
 const NavigationBar: React.FC = () => {
-  const [drawerOpened, setDrawerOpened] = React.useState(false);
+  const [drawerOpened, setDrawerOpened] = React.useState<boolean>(false);
   const navigate = useNavigate();
 
   const toggleDrawer = () => {

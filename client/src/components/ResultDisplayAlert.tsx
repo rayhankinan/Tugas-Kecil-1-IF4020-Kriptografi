@@ -1,33 +1,38 @@
 import React from "react";
 import { Alert, Snackbar } from "@mui/material";
-import Severity from "@defined/severity";
+import AlertProps from "@interface/alert-props";
 
 interface ResultDisplayAlertProps {
-  openAlert: boolean;
-  setOpenAlert: React.Dispatch<React.SetStateAction<boolean>>;
-  severity: Severity;
-  message: string;
+  alertProps: AlertProps | undefined;
+  setAlertProps: React.Dispatch<React.SetStateAction<AlertProps | undefined>>;
 }
 
-const ResultDisplayAlert: React.FC<ResultDisplayAlertProps> = (
-  props: ResultDisplayAlertProps
-) => {
+const ResultDisplayAlert: React.FC<ResultDisplayAlertProps> = ({
+  alertProps,
+  setAlertProps,
+}: ResultDisplayAlertProps) => {
   const handleClose = () => {
-    props.setOpenAlert(false);
+    if (!alertProps) return;
+
+    setAlertProps({
+      openAlert: false,
+      message: alertProps.message,
+      severity: alertProps.severity,
+    });
   };
 
   return (
     <Snackbar
-      open={props.openAlert}
+      open={alertProps?.openAlert}
       autoHideDuration={1000}
       onClose={handleClose}
     >
       <Alert
         onClose={handleClose}
-        severity={props.severity}
+        severity={alertProps?.severity}
         sx={{ width: "100%" }}
       >
-        {props.message}
+        {alertProps?.message}
       </Alert>
     </Snackbar>
   );

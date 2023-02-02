@@ -6,15 +6,14 @@ interface ResultDisplayTextProps {
   isSeparated: boolean;
 }
 
-const ResultDisplayText: React.FC<ResultDisplayTextProps> = (
-  props: ResultDisplayTextProps
-) => {
+const ResultDisplayText: React.FC<ResultDisplayTextProps> = ({
+  displayText,
+  isSeparated,
+}: ResultDisplayTextProps) => {
   const processText = () => {
-    if (!props.displayText) return;
+    if (!displayText) return;
 
-    return props.isSeparated
-      ? props.displayText.replace(/(.{5})/g, "$1 ")
-      : props.displayText;
+    return isSeparated ? displayText.replace(/(.{5})/g, "$1 ") : displayText;
   };
 
   return (

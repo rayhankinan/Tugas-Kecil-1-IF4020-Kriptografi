@@ -10,24 +10,25 @@ interface UploadFileButtonProps {
   setFileInput: React.Dispatch<React.SetStateAction<File | undefined>>;
 }
 
-const UploadFileButton: React.FC<UploadFileButtonProps> = (
-  props: UploadFileButtonProps
-) => {
+const UploadFileButton: React.FC<UploadFileButtonProps> = ({
+  fileInput,
+  setFileInput,
+}: UploadFileButtonProps) => {
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     const selectedFiles = files as FileList;
     const currentFile = selectedFiles?.[0];
 
-    props.setFileInput(currentFile);
+    setFileInput(currentFile);
   };
 
   return (
     <Button
       variant="contained"
       component="label"
-      startIcon={props.fileInput ? <AttachmentIcon /> : <UploadIcon />}
+      startIcon={fileInput ? <AttachmentIcon /> : <UploadIcon />}
     >
-      {props.fileInput ? props.fileInput.name : "Upload"}
+      {fileInput ? fileInput.name : "Upload"}
       <input hidden type="file" onChange={handleUpload} />
     </Button>
   );

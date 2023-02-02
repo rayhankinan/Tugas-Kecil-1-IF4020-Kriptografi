@@ -6,11 +6,13 @@ interface PageLayoutProps {
   children?: JSX.Element | JSX.Element[] | string | string[];
 }
 
-const PageLayout: React.FC<PageLayoutProps> = (props: PageLayoutProps) => {
+const PageLayout: React.FC<PageLayoutProps> = ({
+  children,
+}: PageLayoutProps) => {
   return (
     <React.Fragment>
       <NavigationBar />
-      <Container maxWidth="lg">{props.children}</Container>
+      <Container maxWidth="lg">{children}</Container>
     </React.Fragment>
   );
 };

@@ -18,8 +18,9 @@
     "types": ["node"],
     "paths": {
       "@components/*": ["./src/components/*"],
-      "@defined/*": ["./src/defined/*"],
+      "@defined-types/*": ["./src/defined-types/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@interface/*": ["./src/interface/*"],
       "@layout/*": ["./src/layout/*"],
       "@pages/*": ["./src/pages/*"],
       "@utils/*": ["./src/utils/*"]
