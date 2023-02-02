@@ -5,7 +5,6 @@ import {
   LockOpen as LockOpenIcon,
 } from "@mui/icons-material";
 import APIClient from "@utils/api-client";
-import TempFile from "@utils/create-temp-file";
 import AlertProps from "@interface/alert-props";
 import Operation from "@defined-types/operation";
 
@@ -44,11 +43,10 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
       fileRequest
     );
 
-    if (response instanceof TempFile) {
-      const fileResponse = response.readFile();
-      const message = `${fileResponse.name} berhasil diproses!`;
+    if (typeof response === "string") {
+      const message = `${fileRequest.name} berhasil diproses!`;
 
-      setFileOutput(fileResponse);
+      setFileOutput(new File([response as BlobPart], fileRequest.name));
       setAlertProps({
         openAlert: true,
         message,

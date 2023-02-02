@@ -15,7 +15,10 @@ const Affine: React.FC = () => {
   // Input
   const [displayText, setDisplayText] = React.useState<string>();
   const [fileInput, setFileInput] = React.useState<File>();
-  const [query, setQuery] = React.useState<Record<string, string>>({ key: "" });
+  const [query, setQuery] = React.useState<Record<string, string>>({
+    key: "",
+    shift: "",
+  });
   const [operation, setOperation] = React.useState<Operation>("encrypt-file");
 
   // Output
@@ -55,6 +58,7 @@ const Affine: React.FC = () => {
               setFileInput={setFileInput}
             />
             <InputQuery parameter="key" query={query} setQuery={setQuery} />
+            <InputQuery parameter="shift" query={query} setQuery={setQuery} />
             <InputOperation operation={operation} setOperation={setOperation} />
             <SendFormButton
               path="/affine"
