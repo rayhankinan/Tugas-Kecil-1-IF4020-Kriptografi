@@ -2,17 +2,32 @@ import React from "react";
 import { Container, Stack } from "@mui/material";
 import useDeepCompareEffect from "@hooks/deep-compare-effect";
 import Operation from "@defined-types/operation";
+import AlertProps from "@interface/alert-props";
 import PageLayout from "@layout/PageLayout";
 import UploadDisplayText from "@components/UploadDisplayText";
 import UploadFileButton from "@components/UploadFileButton";
 import InputQuery from "@components/InputQuery";
 import InputOperation from "@components/InputOperation";
+import ResultDisplayAlert from "@components/ResultDisplayAlert";
+import SendFormButton from "@components/SendFormButton";
 
 const Affine: React.FC = () => {
+  // Input
   const [displayText, setDisplayText] = React.useState<string>();
   const [fileInput, setFileInput] = React.useState<File>();
   const [query, setQuery] = React.useState<Record<string, string>>({ key: "" });
   const [operation, setOperation] = React.useState<Operation>("encrypt-file");
+
+  // Output
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [fileOutput, setFileOutput] = React.useState<File>();
+
+  // Notification
+  const [alertProps, setAlertProps] = React.useState<AlertProps>({
+    openAlert: false,
+    severity: "error",
+    message: "",
+  });
 
   useDeepCompareEffect(() => {
     if (!fileInput) return;
@@ -41,10 +56,24 @@ const Affine: React.FC = () => {
             />
             <InputQuery parameter="key" query={query} setQuery={setQuery} />
             <InputOperation operation={operation} setOperation={setOperation} />
+            <SendFormButton
+              path="/affine"
+              operation={operation}
+              query={query}
+              displayText={displayText}
+              fileInput={fileInput}
+              setLoading={setLoading}
+              setFileOutput={setFileOutput}
+              setAlertProps={setAlertProps}
+            />
           </Stack>
         </Container>
         <Container maxWidth="lg">{/* Output */}</Container>
       </Stack>
+      <ResultDisplayAlert
+        alertProps={alertProps}
+        setAlertProps={setAlertProps}
+      />
     </PageLayout>
   );
 };

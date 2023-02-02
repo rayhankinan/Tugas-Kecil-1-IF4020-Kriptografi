@@ -1,7 +1,7 @@
 import Axios, { AxiosError } from "axios";
 import fs from "fs";
 import APIError from "@utils/api-error";
-import FileWritableStream from "@utils/file-writable-stream";
+import TempFile from "@utils/create-temp-file";
 
 class APIClient {
   public static readonly API_HOST = process.env.API_HOST || "localhost";
@@ -26,24 +26,25 @@ class APIClient {
     path: string,
     query: Record<string, string>,
     file: File
-  ): Promise<File | APIError> {
+  ): Promise<TempFile | APIError> {
     try {
       const response = await Axios.post<fs.ReadStream>(
         `${APIClient.API_HOST}${path}`,
         { file },
         {
           params: {
-            access_token: APIClient.API_KEY,
             ...query,
+            access_token: APIClient.API_KEY,
           },
           responseType: "stream",
         }
       );
 
-      const fileWritableStream = new FileWritableStream(file.name);
+      const tempFile = new TempFile(file.name);
+      const fileWritableStream = tempFile.getWriteableStream();
       response.data.pipe(fileWritableStream);
 
-      return fileWritableStream.getFile();
+      return tempFile;
     } catch (err: any) {
       return APIClient.HandleError(err);
     }

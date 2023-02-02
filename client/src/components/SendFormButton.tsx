@@ -1,53 +1,55 @@
 import React from "react";
-import { Button, CircularProgress } from "@mui/material";
+import { Button } from "@mui/material";
 import {
   Lock as LockIcon,
   LockOpen as LockOpenIcon,
 } from "@mui/icons-material";
 import APIClient from "@utils/api-client";
+import TempFile from "@utils/create-temp-file";
 import AlertProps from "@interface/alert-props";
-import FileWritableStream from "@utils/file-writable-stream";
-import StringReadableStream from "@utils/string-readable-stream";
+import Operation from "@defined-types/operation";
 
 interface SendFormButtonProps {
   path: string;
-  isEncrypt: boolean;
+  operation: Operation;
   query: Record<string, string>;
   displayText: string | undefined;
   fileInput: File | undefined;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setFileOutput: React.Dispatch<React.SetStateAction<File | undefined>>;
-  setAlert: React.Dispatch<React.SetStateAction<AlertProps | undefined>>;
+  setAlertProps: React.Dispatch<React.SetStateAction<AlertProps>>;
 }
 
 const SendFormButton: React.FC<SendFormButtonProps> = ({
   path,
-  isEncrypt,
+  operation,
   query,
   displayText,
   fileInput,
   setLoading,
   setFileOutput,
-  setAlert,
+  setAlertProps,
 }: SendFormButtonProps) => {
   const handleSend = async () => {
     if (!displayText) return;
 
     setLoading(true);
-    const stringReadableStream = new StringReadableStream(displayText);
-    const fileWriteableStream = new FileWritableStream(
+    const fileRequest = new File(
+      [displayText],
       fileInput ? fileInput.name : ".txt"
     );
-    stringReadableStream.pipe(fileWriteableStream);
-    const file = fileWriteableStream.getFile();
+    const response = await APIClient.Post(
+      `${path}/${operation}`,
+      query,
+      fileRequest
+    );
 
-    const response = await APIClient.Post(path, query, file);
+    if (response instanceof TempFile) {
+      const fileResponse = response.readFile();
+      const message = `${fileResponse.name} berhasil diproses!`;
 
-    if (response instanceof File) {
-      const message = `${response.name} berhasil diproses!`;
-
-      setFileOutput(response);
-      setAlert({
+      setFileOutput(fileResponse);
+      setAlertProps({
         openAlert: true,
         message,
         severity: "success",
@@ -58,7 +60,7 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
       const { loc, msg, type } = detail;
       const message = `${type}: ${msg} (in ${loc.join(", ")})`;
 
-      setAlert({
+      setAlertProps({
         openAlert: true,
         message,
         severity: "error",
@@ -72,10 +74,10 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
     <Button
       variant="contained"
       component="label"
-      startIcon={isEncrypt ? <LockIcon /> : <LockOpenIcon />}
+      startIcon={operation === "encrypt-file" ? <LockIcon /> : <LockOpenIcon />}
       onClick={handleSend}
     >
-      {isEncrypt ? "Encrypt" : "Decrypt"}
+      {operation === "encrypt-file" ? "Encrypt" : "Decrypt"}
     </Button>
   );
 };

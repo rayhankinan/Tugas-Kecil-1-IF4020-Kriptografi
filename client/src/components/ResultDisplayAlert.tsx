@@ -3,8 +3,8 @@ import { Alert, Snackbar } from "@mui/material";
 import AlertProps from "@interface/alert-props";
 
 interface ResultDisplayAlertProps {
-  alertProps: AlertProps | undefined;
-  setAlertProps: React.Dispatch<React.SetStateAction<AlertProps | undefined>>;
+  alertProps: AlertProps;
+  setAlertProps: React.Dispatch<React.SetStateAction<AlertProps>>;
 }
 
 const ResultDisplayAlert: React.FC<ResultDisplayAlertProps> = ({
@@ -12,8 +12,6 @@ const ResultDisplayAlert: React.FC<ResultDisplayAlertProps> = ({
   setAlertProps,
 }: ResultDisplayAlertProps) => {
   const handleClose = () => {
-    if (!alertProps) return;
-
     const newAlertProps = { ...alertProps };
     newAlertProps.openAlert = false;
     setAlertProps(newAlertProps);
@@ -21,16 +19,16 @@ const ResultDisplayAlert: React.FC<ResultDisplayAlertProps> = ({
 
   return (
     <Snackbar
-      open={alertProps?.openAlert}
+      open={alertProps.openAlert}
       autoHideDuration={1000}
       onClose={handleClose}
     >
       <Alert
         onClose={handleClose}
-        severity={alertProps?.severity}
+        severity={alertProps.severity}
         sx={{ width: "100%" }}
       >
-        {alertProps?.message}
+        {alertProps.message}
       </Alert>
     </Snackbar>
   );

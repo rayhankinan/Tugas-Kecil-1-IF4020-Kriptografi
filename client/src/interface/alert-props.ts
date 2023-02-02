@@ -1,4 +1,4 @@
-import Severity from "@defined/severity";
+import Severity from "@defined-types/severity";
 
 interface AlertProps {
   openAlert: boolean;
