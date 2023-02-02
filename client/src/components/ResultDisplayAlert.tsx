@@ -14,11 +14,9 @@ const ResultDisplayAlert: React.FC<ResultDisplayAlertProps> = ({
   const handleClose = () => {
     if (!alertProps) return;
 
-    setAlertProps({
-      openAlert: false,
-      message: alertProps.message,
-      severity: alertProps.severity,
-    });
+    const newAlertProps = { ...alertProps };
+    newAlertProps.openAlert = false;
+    setAlertProps(newAlertProps);
   };
 
   return (

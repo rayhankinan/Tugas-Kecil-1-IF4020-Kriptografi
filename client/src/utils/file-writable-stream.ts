@@ -1,6 +1,6 @@
 import stream from "stream";
 
-class FileStream extends stream.Writable {
+class FileWritableStream extends stream.Writable {
   private readonly fileBits: BlobPart[];
   private readonly fileName: string;
 
@@ -24,4 +24,4 @@ class FileStream extends stream.Writable {
   }
 }
 
-export default FileStream;
+export default FileWritableStream;

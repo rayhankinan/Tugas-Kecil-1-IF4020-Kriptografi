@@ -1,7 +1,7 @@
-import Axios, { AxiosError, AxiosProgressEvent } from "axios";
+import Axios, { AxiosError } from "axios";
 import fs from "fs";
 import APIError from "@utils/api-error";
-import FileStream from "@utils/file-stream";
+import FileWritableStream from "@utils/file-writable-stream";
 
 class APIClient {
   public static readonly API_HOST = process.env.API_HOST || "localhost";
@@ -25,8 +25,7 @@ class APIClient {
   public static async Post(
     path: string,
     query: Record<string, string>,
-    file: File,
-    onUploadProgress: (progressEvent: AxiosProgressEvent) => void
+    file: File
   ): Promise<File | APIError> {
     try {
       const response = await Axios.post<fs.ReadStream>(
@@ -38,14 +37,13 @@ class APIClient {
             ...query,
           },
           responseType: "stream",
-          onUploadProgress,
         }
       );
 
-      const fileStream = new FileStream(file.name);
-      response.data.pipe(fileStream);
+      const fileWritableStream = new FileWritableStream(file.name);
+      response.data.pipe(fileWritableStream);
 
-      return fileStream.getFile();
+      return fileWritableStream.getFile();
     } catch (err: any) {
       return APIClient.HandleError(err);
     }

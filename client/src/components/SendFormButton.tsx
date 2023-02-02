@@ -4,15 +4,18 @@ import {
   Lock as LockIcon,
   LockOpen as LockOpenIcon,
 } from "@mui/icons-material";
-import { AxiosProgressEvent } from "axios";
 import APIClient from "@utils/api-client";
 import AlertProps from "@interface/alert-props";
+import FileWritableStream from "@utils/file-writable-stream";
+import StringReadableStream from "@utils/string-readable-stream";
 
 interface SendFormButtonProps {
   path: string;
   isEncrypt: boolean;
   query: Record<string, string>;
+  displayText: string | undefined;
   fileInput: File | undefined;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setFileOutput: React.Dispatch<React.SetStateAction<File | undefined>>;
   setAlert: React.Dispatch<React.SetStateAction<AlertProps | undefined>>;
 }
@@ -21,28 +24,24 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
   path,
   isEncrypt,
   query,
+  displayText,
   fileInput,
+  setLoading,
   setFileOutput,
   setAlert,
 }: SendFormButtonProps) => {
-  const [progressUpload, setProgressUpload] = React.useState<number>(100);
-
   const handleSend = async () => {
-    if (!fileInput) return;
+    if (!displayText) return;
 
-    setProgressUpload(0);
-    const response = await APIClient.Post(
-      path,
-      query,
-      fileInput,
-      (progressEvent: AxiosProgressEvent) => {
-        if (!progressEvent.total) return;
-
-        setProgressUpload(
-          Math.round(100 * progressEvent.loaded) / progressEvent.total
-        );
-      }
+    setLoading(true);
+    const stringReadableStream = new StringReadableStream(displayText);
+    const fileWriteableStream = new FileWritableStream(
+      fileInput ? fileInput.name : ".txt"
     );
+    stringReadableStream.pipe(fileWriteableStream);
+    const file = fileWriteableStream.getFile();
+
+    const response = await APIClient.Post(path, query, file);
 
     if (response instanceof File) {
       const message = `${response.name} berhasil diproses!`;
@@ -65,36 +64,18 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
         severity: "error",
       });
     }
-  };
 
-  const getStartIcon = () => {
-    if (progressUpload < 100) {
-      return <CircularProgress value={progressUpload} />;
-    } else if (isEncrypt) {
-      return <LockIcon />;
-    } else {
-      return <LockOpenIcon />;
-    }
-  };
-
-  const getMessage = () => {
-    if (progressUpload < 100) {
-      return "Uploading";
-    } else if (isEncrypt) {
-      return "Encrypt";
-    } else {
-      return "Decrypt";
-    }
+    setLoading(false);
   };
 
   return (
     <Button
       variant="contained"
       component="label"
-      startIcon={getStartIcon()}
+      startIcon={isEncrypt ? <LockIcon /> : <LockOpenIcon />}
       onClick={handleSend}
     >
-      {getMessage()}
+      {isEncrypt ? "Encrypt" : "Decrypt"}
     </Button>
   );
 };
