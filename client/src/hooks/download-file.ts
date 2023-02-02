@@ -26,9 +26,6 @@ const useDownloadFile: DownloadFileHook = ({
     const newUrl = URL.createObjectURL(fileOutput);
     setFileUrl(newUrl);
     setFileName(fileOutput.name);
-
-    console.log(newUrl);
-
     ref.current?.click();
     URL.revokeObjectURL(newUrl);
   };

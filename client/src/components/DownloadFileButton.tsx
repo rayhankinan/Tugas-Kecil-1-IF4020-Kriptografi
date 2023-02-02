@@ -10,13 +10,24 @@ interface DownloadFileButtonProps {
 const DownloadFileButton: React.FC<DownloadFileButtonProps> = ({
   fileOutput,
 }: DownloadFileButtonProps) => {
-  const [ref, name, url, download] = useDownloadFile({
-    fileOutput,
-  });
+  const download = () => {
+    if (!fileOutput) return;
+
+    const url = URL.createObjectURL(fileOutput);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileOutput.name;
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <React.Fragment>
-      <a href={url} download={name} ref={ref} hidden />
       <Button
         variant="contained"
         component="label"

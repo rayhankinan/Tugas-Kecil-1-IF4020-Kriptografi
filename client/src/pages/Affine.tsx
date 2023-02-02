@@ -37,7 +37,10 @@ const Affine: React.FC = () => {
   });
 
   useDeepCompareEffect(() => {
-    if (!fileInput) return;
+    if (!fileInput) {
+      setDisplayTextInput(undefined);
+      return;
+    }
 
     const reader = new FileReader();
     reader.onload = (evt) => {
@@ -49,7 +52,10 @@ const Affine: React.FC = () => {
   }, [fileInput]);
 
   useDeepCompareEffect(() => {
-    if (!fileOutput) return;
+    if (!fileOutput) {
+      setDisplayTextOutput(undefined);
+      return;
+    }
 
     const reader = new FileReader();
     reader.onload = (evt) => {
