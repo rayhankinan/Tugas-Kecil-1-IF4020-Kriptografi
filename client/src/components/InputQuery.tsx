@@ -33,4 +33,5 @@ const InputQuery: React.FC<InputQueryProps> = ({
     </Box>
   );
 };
+
 export default InputQuery;
