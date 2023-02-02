@@ -10,18 +10,16 @@ const SwitchDisplayView: React.FC<SwitchDisplayViewProps> = ({
   isSeparated,
   setIsSeparated,
 }: SwitchDisplayViewProps) => {
-  const [checked, setChecked] = React.useState<boolean>(false);
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.target;
 
-    setChecked(checked);
+    setIsSeparated(checked);
   };
 
   return (
     <FormControlLabel
-      control={<Switch checked={checked} onChange={handleChange} />}
-      label={checked ? "Separated" : "Default"}
+      control={<Switch checked={isSeparated} onChange={handleChange} />}
+      label={isSeparated ? "Separated" : "Default"}
     />
   );
 };
