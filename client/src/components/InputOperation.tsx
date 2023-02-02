@@ -1,7 +1,6 @@
 import React from "react";
 import {
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -9,8 +8,8 @@ import {
 import Operation from "@defined-types/operation";
 
 interface InputOperationProps {
-  operation: Operation | undefined;
-  setOperation: React.Dispatch<React.SetStateAction<Operation | undefined>>;
+  operation: Operation;
+  setOperation: React.Dispatch<React.SetStateAction<Operation>>;
 }
 
 const InputOperation: React.FC<InputOperationProps> = ({
@@ -35,7 +34,6 @@ const InputOperation: React.FC<InputOperationProps> = ({
 
   return (
     <FormControl>
-      <InputLabel>Operation</InputLabel>
       <Select
         open={open}
         onOpen={handleOpen}
