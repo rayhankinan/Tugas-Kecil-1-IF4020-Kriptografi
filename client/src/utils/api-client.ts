@@ -5,15 +5,16 @@ class APIClient {
   public static readonly API_HOST = import.meta.env.VITE_API_HOST || "/api";
   public static readonly API_KEY = import.meta.env.VITE_API_KEY || "api-key";
 
-  private static HandleError(rawError: any): APIError {
+  private static HandleError(err: any): APIError {
     const emptyError: APIError = {
       detail: [],
     };
 
-    if (rawError instanceof AxiosError) {
-      const { response } = rawError as AxiosError;
+    if (err instanceof AxiosError) {
+      const { response } = err as AxiosError;
+
       if (response) {
-        return response.data as APIError;
+        return JSON.parse(response.data as string) as APIError;
       }
       return emptyError;
     }
@@ -42,7 +43,7 @@ class APIClient {
       );
 
       return response.data;
-    } catch (err: any) {
+    } catch (err) {
       return APIClient.HandleError(err);
     }
   }

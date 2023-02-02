@@ -41,9 +41,10 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
     );
 
     if (typeof response === "string") {
-      const message = `${fileRequest.name} berhasil diproses!`;
+      const fileResponse = new File([response as BlobPart], fileRequest.name);
+      setFileOutput(fileResponse);
 
-      setFileOutput(new File([response as BlobPart], fileRequest.name));
+      const message = `${fileRequest.name} berhasil diproses!`;
       setAlertProps({
         openAlert: true,
         message,

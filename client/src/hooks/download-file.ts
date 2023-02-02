@@ -8,7 +8,7 @@ type DownloadFileInfo = [
   ref: React.MutableRefObject<HTMLAnchorElement | null>,
   name: string | undefined,
   url: string | undefined,
-  download: () => Promise<void>
+  download: () => void
 ];
 
 type DownloadFileHook = ({}: DownloadFileProps) => DownloadFileInfo;
@@ -20,14 +20,17 @@ const useDownloadFile: DownloadFileHook = ({
   const [name, setFileName] = React.useState<string>();
   const [url, setFileUrl] = React.useState<string>();
 
-  const download = async () => {
+  const download = () => {
     if (!fileOutput) return;
 
-    const url = URL.createObjectURL(fileOutput);
-    setFileUrl(url);
+    const newUrl = URL.createObjectURL(fileOutput);
+    setFileUrl(newUrl);
     setFileName(fileOutput.name);
+
+    console.log(newUrl);
+
     ref.current?.click();
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(newUrl);
   };
 
   return [ref, name, url, download];
