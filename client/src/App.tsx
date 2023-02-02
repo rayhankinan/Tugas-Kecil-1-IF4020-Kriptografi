@@ -2,14 +2,13 @@ import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { StyledEngineProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import LoadingPage from "@pages/Loading";
 import Routing from "./routing";
 
 const App = () => {
   return (
     <StyledEngineProvider injectFirst>
       <CssBaseline />
-      <Suspense fallback={<LoadingPage />}>
+      <Suspense>
         <BrowserRouter>
           <Routes>
             {Routing.map((route) => {

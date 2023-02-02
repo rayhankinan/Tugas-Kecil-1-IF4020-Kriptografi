@@ -14,7 +14,6 @@ interface SendFormButtonProps {
   query: Record<string, string>;
   displayText: string | undefined;
   fileInput: File | undefined;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setFileOutput: React.Dispatch<React.SetStateAction<File | undefined>>;
   setAlertProps: React.Dispatch<React.SetStateAction<AlertProps>>;
 }
@@ -25,14 +24,12 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
   query,
   displayText,
   fileInput,
-  setLoading,
   setFileOutput,
   setAlertProps,
 }: SendFormButtonProps) => {
   const handleSend = async () => {
     if (!displayText) return;
 
-    setLoading(true);
     const fileRequest = new File(
       [displayText],
       fileInput ? fileInput.name : ".txt"
@@ -64,8 +61,6 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
         severity: "error",
       });
     }
-
-    setLoading(false);
   };
 
   return (

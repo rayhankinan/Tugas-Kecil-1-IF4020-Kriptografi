@@ -8,12 +8,15 @@ import UploadDisplayText from "@components/UploadDisplayText";
 import UploadFileButton from "@components/UploadFileButton";
 import InputQuery from "@components/InputQuery";
 import InputOperation from "@components/InputOperation";
-import ResultDisplayAlert from "@components/ResultDisplayAlert";
 import SendFormButton from "@components/SendFormButton";
+import ResultDisplayAlert from "@components/ResultDisplayAlert";
+import ResultDisplayText from "@components/ResultDisplayText";
+import SwitchDisplayView from "@components/SwitchDisplayView";
+import DownloadFileButton from "@components/DownloadFileButton";
 
 const Affine: React.FC = () => {
   // Input
-  const [displayText, setDisplayText] = React.useState<string>();
+  const [displayTextInput, setDisplayTextInput] = React.useState<string>();
   const [fileInput, setFileInput] = React.useState<File>();
   const [query, setQuery] = React.useState<Record<string, string>>({
     key: "",
@@ -22,8 +25,9 @@ const Affine: React.FC = () => {
   const [operation, setOperation] = React.useState<Operation>("encrypt-file");
 
   // Output
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [displayTextOutput, setDisplayTextOutput] = React.useState<string>();
   const [fileOutput, setFileOutput] = React.useState<File>();
+  const [isSeparated, setIsSeparated] = React.useState<boolean>(false);
 
   // Notification
   const [alertProps, setAlertProps] = React.useState<AlertProps>({
@@ -38,11 +42,23 @@ const Affine: React.FC = () => {
     const reader = new FileReader();
     reader.onload = (evt) => {
       if (!evt.target) return;
-      setDisplayText(evt.target.result as string);
+      setDisplayTextInput(evt.target.result as string);
     };
 
-    reader.readAsText(fileInput);
+    reader.readAsBinaryString(fileInput);
   }, [fileInput]);
+
+  useDeepCompareEffect(() => {
+    if (!fileOutput) return;
+
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      if (!evt.target) return;
+      setDisplayTextOutput(evt.target.result as string);
+    };
+
+    reader.readAsBinaryString(fileOutput);
+  }, [fileOutput]);
 
   return (
     <PageLayout>
@@ -50,8 +66,8 @@ const Affine: React.FC = () => {
         <Container maxWidth="lg">
           <Stack direction="column" spacing={2}>
             <UploadDisplayText
-              displayText={displayText}
-              setDisplayText={setDisplayText}
+              displayText={displayTextInput}
+              setDisplayText={setDisplayTextInput}
             />
             <UploadFileButton
               fileInput={fileInput}
@@ -64,15 +80,26 @@ const Affine: React.FC = () => {
               path="/affine"
               operation={operation}
               query={query}
-              displayText={displayText}
+              displayText={displayTextInput}
               fileInput={fileInput}
-              setLoading={setLoading}
               setFileOutput={setFileOutput}
               setAlertProps={setAlertProps}
             />
           </Stack>
         </Container>
-        <Container maxWidth="lg">{/* Output */}</Container>
+        <Container maxWidth="lg">
+          <Stack direction="column" spacing={2}>
+            <ResultDisplayText
+              displayText={displayTextOutput}
+              isSeparated={isSeparated}
+            />
+            <SwitchDisplayView
+              isSeparated={isSeparated}
+              setIsSeparated={setIsSeparated}
+            />
+            <DownloadFileButton fileOutput={fileOutput} />
+          </Stack>
+        </Container>
       </Stack>
       <ResultDisplayAlert
         alertProps={alertProps}
