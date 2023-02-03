@@ -3,7 +3,7 @@ from fastapi import UploadFile
 from pydantic import conbytes, conint, constr
 from .lib import alru_cache_typed
 from .constants import LENGTH_OF_ALPHABET, OVERHEAD_ASCII, UPPERCASE_ASCII
-from .playfair.constants import X_INDEX
+from .playfair.constants import X_INDEX, J_INDEX
 
 AllStringType: Type[str] = constr(min_length=1)
 AllByteType: Type[bytes] = conbytes(
@@ -61,9 +61,12 @@ async def apply_static_playfair_to_file(file: UploadFile, func: Callable[[any], 
                     array_ascii.append(X_INDEX)
                     yield await func(array_ascii)
                     array_ascii = []
-                array_ascii.append(num)
-            if len(array_ascii) == 2:
-                yield await func(array_ascii)
+                if num == J_INDEX:
+                    array_ascii.append(J_INDEX - 1)
+                else:
+                    array_ascii.append(num)
+        if len(array_ascii) == 2:
+            yield await func(array_ascii)
 
 
 async def apply_dynamic_func_to_file(file: UploadFile, bytes_group: int = 1, func: Callable[[Union[int, List[int]], int], Coroutine[Any, Any, bytes]] = lambda x, _: x):
