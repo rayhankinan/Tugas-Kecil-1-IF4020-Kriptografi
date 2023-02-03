@@ -67,7 +67,7 @@ const AutoKeyVigenere: React.FC = () => {
         <Container maxWidth="lg">
           <Stack direction="column" spacing={2}>
             <UploadDisplayText
-              placeholder="Input Text"
+              placeholder="Auto Key Vigenere Cipher"
               displayText={displayTextInput}
               setDisplayText={setDisplayTextInput}
             />
@@ -102,7 +102,7 @@ const AutoKeyVigenere: React.FC = () => {
         <Container maxWidth="lg">
           <Stack direction="column" spacing={2}>
             <ResultDisplayText
-              placeholder="Output Text"
+              placeholder="Output"
               displayText={displayTextOutput}
               isSeparated={isSeparated}
             />
