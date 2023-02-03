@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "@layout/PageLayout";
 
@@ -8,7 +8,9 @@ const Affine: React.FC = () => {
 
   return (
     <PageLayout>
-      <Button onClick={() => navigate(-1)}>Go Back</Button>
+      <Stack direction="column" spacing={2}>
+        <Button onClick={() => navigate(-1)}>Go Back</Button>
+      </Stack>
     </PageLayout>
   );
 };
