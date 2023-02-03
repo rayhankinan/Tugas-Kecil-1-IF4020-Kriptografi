@@ -10,7 +10,7 @@ const Error: React.FC = () => {
     <PageLayout>
       <Stack direction="column" spacing={2}>
         <center>
-          <Typography variant="h1" component="h2">
+          <Typography variant="h6" component="div">
             Page Not Found!
           </Typography>
         </center>

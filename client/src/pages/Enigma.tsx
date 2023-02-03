@@ -10,7 +10,9 @@ const Enigma: React.FC = () => {
     <PageLayout>
       <Stack direction="column" spacing={2}>
         <center>
-          <Typography variant="h6">Not Yet Implemented!</Typography>
+          <Typography variant="h6" component="div">
+            Not Yet Implemented!
+          </Typography>
         </center>
         <Button onClick={() => navigate(-1)}>Go Back</Button>
       </Stack>
