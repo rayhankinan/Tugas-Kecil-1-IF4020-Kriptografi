@@ -56,7 +56,7 @@ interface PageRouting {
 const Routing: PageRouting[] = [
   {
     path: "/",
-    component: AffinePage,
+    component: VigenerePage,
   },
   {
     path: "/affine",

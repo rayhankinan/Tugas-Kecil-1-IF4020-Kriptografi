@@ -63,8 +63,8 @@ const Vigenere: React.FC = () => {
 
   return (
     <PageLayout>
-      <Stack direction="row" spacing={2}>
-        <Container maxWidth="lg">
+      <Stack direction="row" spacing={10}>
+        <Container maxWidth="xl">
           <Stack direction="column" spacing={2}>
             <UploadDisplayText
               placeholder="Vigenere Cipher"
@@ -99,7 +99,7 @@ const Vigenere: React.FC = () => {
             />
           </Stack>
         </Container>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Stack direction="column" spacing={2}>
             <ResultDisplayText
               placeholder="Output"

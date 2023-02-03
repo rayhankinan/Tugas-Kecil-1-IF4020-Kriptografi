@@ -63,8 +63,8 @@ const Hill: React.FC = () => {
 
   return (
     <PageLayout>
-      <Stack direction="row" spacing={2}>
-        <Container maxWidth="lg">
+      <Stack direction="row" spacing={10}>
+        <Container maxWidth="xl">
           <Stack direction="column" spacing={2}>
             <UploadDisplayText
               placeholder="Hill Cipher"
@@ -99,7 +99,7 @@ const Hill: React.FC = () => {
             />
           </Stack>
         </Container>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Stack direction="column" spacing={2}>
             <ResultDisplayText
               placeholder="Output"

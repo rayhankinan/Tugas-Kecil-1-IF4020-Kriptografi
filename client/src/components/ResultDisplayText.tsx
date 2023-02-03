@@ -24,7 +24,7 @@ const ResultDisplayText: React.FC<ResultDisplayTextProps> = ({
         multiline
         fullWidth
         placeholder={placeholder}
-        rows={10}
+        rows={25}
         value={processText()}
         variant="standard"
         InputProps={{

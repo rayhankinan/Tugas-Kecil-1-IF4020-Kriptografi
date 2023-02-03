@@ -24,7 +24,7 @@ const UploadDisplayText: React.FC<UploadDisplayTextProps> = ({
         multiline
         fullWidth
         placeholder={placeholder}
-        rows={10}
+        rows={25}
         variant="standard"
         value={displayText}
         onChange={handleChange}
