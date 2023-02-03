@@ -1,5 +1,5 @@
 import numpy
-from typing import List, Type
+from typing import List, Tuple, Type
 from pydantic import conlist
 from ..lib import alru_cache_typed
 from .constants import MATRIX_DIMENSION, J_INDEX
@@ -38,7 +38,7 @@ async def generate_matrix(key: AlphabetStringType):
     return set_key
 
 
-def find_coord(key_matrix: numpy.ndarray, num: int):
+def find_coord(key_matrix: numpy.ndarray, num: int) -> Tuple[int, int]:
     for i in range(MATRIX_DIMENSION):
         for j in range(MATRIX_DIMENSION):
             if (key_matrix[i][j] == num):
