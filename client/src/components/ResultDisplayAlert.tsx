@@ -20,7 +20,7 @@ const ResultDisplayAlert: React.FC<ResultDisplayAlertProps> = ({
   return (
     <Snackbar
       open={alertProps.openAlert}
-      autoHideDuration={1000}
+      autoHideDuration={5000}
       onClose={handleClose}
     >
       <Alert

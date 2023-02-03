@@ -116,7 +116,10 @@ const Affine: React.FC = () => {
               isSeparated={isSeparated}
               setIsSeparated={setIsSeparated}
             />
-            <DownloadFileButton fileOutput={fileOutput} />
+            <DownloadFileButton
+              fileOutput={fileOutput}
+              disabled={fileOutput === undefined}
+            />
           </Stack>
         </Container>
       </Stack>

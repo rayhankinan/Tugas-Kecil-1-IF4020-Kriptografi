@@ -32,7 +32,7 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
 
     const fileRequest = new File(
       [displayText],
-      fileInput ? fileInput.name : ".txt"
+      fileInput ? fileInput.name : "REQUEST"
     );
     const response = await APIClient.Post(
       `${path}/${operation}`,
@@ -41,7 +41,17 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
     );
 
     if (typeof response === "string") {
-      const fileResponse = new File([response as BlobPart], fileRequest.name);
+      const fileType = fileInput ? fileInput.type : "text/plain";
+      const fileName = fileInput ? fileInput.name : "RESPONSE";
+
+      const bytes = new Uint8Array(response.length);
+      for (let i = 0; i < response.length; i++) {
+        bytes[i] = response.charCodeAt(i);
+      }
+      const fileResponse = new File([bytes], fileName, {
+        type: fileType,
+      });
+
       setFileOutput(fileResponse);
 
       const message = `${fileRequest.name} berhasil diproses!`;
