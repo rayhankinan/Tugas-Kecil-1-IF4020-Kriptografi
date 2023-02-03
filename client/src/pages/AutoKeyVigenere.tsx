@@ -75,6 +75,7 @@ const AutoKeyVigenere: React.FC = () => {
               <UploadFileButton
                 fileInput={fileInput}
                 setFileInput={setFileInput}
+                accept="text/plain"
               />
               <ClearFileButton
                 fileInput={fileInput}
@@ -110,10 +111,7 @@ const AutoKeyVigenere: React.FC = () => {
               isSeparated={isSeparated}
               setIsSeparated={setIsSeparated}
             />
-            <DownloadFileButton
-              fileOutput={fileOutput}
-              disabled={fileOutput === undefined}
-            />
+            <DownloadFileButton fileOutput={fileOutput} />
           </Stack>
         </Container>
       </Stack>

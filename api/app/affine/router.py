@@ -10,8 +10,7 @@ affine_router = APIRouter(prefix="/affine")
 async def encrypt_file_handler(affine_file_in: AffineFileIn = Depends()):
     iterable_file_content = await encrypt_file_service(affine_file_in.key, affine_file_in.shift, affine_file_in.file)
     response = StreamingResponse(
-        content=iterable_file_content,
-        media_type=affine_file_in.file.content_type
+        content=iterable_file_content
     )
     return response
 
@@ -20,7 +19,6 @@ async def encrypt_file_handler(affine_file_in: AffineFileIn = Depends()):
 async def decrypt_file_handler(affine_file_in: AffineFileIn = Depends()):
     iterable_file_content = await decrypt_file_service(affine_file_in.key, affine_file_in.shift, affine_file_in.file)
     response = StreamingResponse(
-        content=iterable_file_content,
-        media_type=affine_file_in.file.content_type
+        content=iterable_file_content
     )
     return response

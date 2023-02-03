@@ -11,10 +11,11 @@ class APIClient {
     };
 
     if (err instanceof AxiosError) {
-      const { response } = err as AxiosError;
+      const { response } = err as AxiosError<ArrayBuffer>;
 
       if (response) {
-        return JSON.parse(response.data as string) as APIError;
+        const enc = new TextDecoder();
+        return JSON.parse(enc.decode(response.data)) as APIError;
       }
       return emptyError;
     }
@@ -25,12 +26,12 @@ class APIClient {
     path: string,
     query: Record<string, string>,
     file: File
-  ): Promise<string | APIError> {
+  ): Promise<ArrayBuffer | APIError> {
     try {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await Axios.post<string>(
+      const response = await Axios.post<ArrayBuffer>(
         `${APIClient.API_HOST}${path}`,
         formData,
         {
@@ -38,7 +39,7 @@ class APIClient {
             ...query,
             access_token: APIClient.API_KEY,
           },
-          responseType: "stream",
+          responseType: "arraybuffer",
         }
       );
 
