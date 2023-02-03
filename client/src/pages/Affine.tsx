@@ -6,6 +6,7 @@ import AlertProps from "@interface/alert-props";
 import PageLayout from "@layout/PageLayout";
 import UploadDisplayText from "@components/UploadDisplayText";
 import UploadFileButton from "@components/UploadFileButton";
+import ClearFileButton from "@components/ClearFileButton";
 import InputQuery from "@components/InputQuery";
 import InputOperation from "@components/InputOperation";
 import SendFormButton from "@components/SendFormButton";
@@ -37,10 +38,7 @@ const Affine: React.FC = () => {
   });
 
   useDeepCompareEffect(() => {
-    if (!fileInput) {
-      setDisplayTextInput(undefined);
-      return;
-    }
+    if (!fileInput) return;
 
     const reader = new FileReader();
     reader.onload = (evt) => {
@@ -52,10 +50,7 @@ const Affine: React.FC = () => {
   }, [fileInput]);
 
   useDeepCompareEffect(() => {
-    if (!fileOutput) {
-      setDisplayTextOutput(undefined);
-      return;
-    }
+    if (!fileOutput) return;
 
     const reader = new FileReader();
     reader.onload = (evt) => {
@@ -75,10 +70,16 @@ const Affine: React.FC = () => {
               displayText={displayTextInput}
               setDisplayText={setDisplayTextInput}
             />
-            <UploadFileButton
-              fileInput={fileInput}
-              setFileInput={setFileInput}
-            />
+            <Stack direction={"row"} spacing={2}>
+              <UploadFileButton
+                fileInput={fileInput}
+                setFileInput={setFileInput}
+              />
+              <ClearFileButton
+                fileInput={fileInput}
+                setFileInput={setFileInput}
+              />
+            </Stack>
             <InputQuery parameter="key" query={query} setQuery={setQuery} />
             <InputQuery parameter="shift" query={query} setQuery={setQuery} />
             <InputOperation operation={operation} setOperation={setOperation} />

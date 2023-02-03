@@ -51,8 +51,6 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
         severity: "success",
       });
     } else {
-      setFileOutput(undefined);
-
       const { detail: listOfDetails } = response;
       const detail = listOfDetails[0];
       const { loc, msg, type } = detail;

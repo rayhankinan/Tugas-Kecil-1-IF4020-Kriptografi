@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
 import { Download as DownloadIcon } from "@mui/icons-material";
-import useDownloadFile from "@hooks/download-file";
 import React from "react";
 
 interface DownloadFileButtonProps {

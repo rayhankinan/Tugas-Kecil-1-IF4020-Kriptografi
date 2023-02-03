@@ -20,6 +20,7 @@ const UploadFileButton: React.FC<UploadFileButtonProps> = ({
     const currentFile = selectedFiles?.[0];
 
     setFileInput(currentFile);
+    event.target.value = "";
   };
 
   return (
