@@ -3,12 +3,14 @@ import { Box, TextField } from "@mui/material";
 
 interface InputQueryProps {
   parameter: string;
+  placeholder: string;
   query: Record<string, string>;
   setQuery: React.Dispatch<React.SetStateAction<Record<string, string>>>;
 }
 
 const InputQuery: React.FC<InputQueryProps> = ({
   parameter,
+  placeholder,
   query,
   setQuery,
 }: InputQueryProps) => {
@@ -24,6 +26,7 @@ const InputQuery: React.FC<InputQueryProps> = ({
     <Box component="form" sx={{ flexGrow: 1 }} noValidate autoComplete="off">
       <TextField
         fullWidth
+        placeholder={placeholder}
         variant="standard"
         value={query?.[parameter]}
         onChange={handleChange}

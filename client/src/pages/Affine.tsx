@@ -67,6 +67,7 @@ const Affine: React.FC = () => {
         <Container maxWidth="lg">
           <Stack direction="column" spacing={2}>
             <UploadDisplayText
+              placeholder="Input Text"
               displayText={displayTextInput}
               setDisplayText={setDisplayTextInput}
             />
@@ -80,8 +81,18 @@ const Affine: React.FC = () => {
                 setFileInput={setFileInput}
               />
             </Stack>
-            <InputQuery parameter="key" query={query} setQuery={setQuery} />
-            <InputQuery parameter="shift" query={query} setQuery={setQuery} />
+            <InputQuery
+              parameter="key"
+              placeholder="Key"
+              query={query}
+              setQuery={setQuery}
+            />
+            <InputQuery
+              parameter="shift"
+              placeholder="Shift"
+              query={query}
+              setQuery={setQuery}
+            />
             <InputOperation operation={operation} setOperation={setOperation} />
             <SendFormButton
               path="/affine"
@@ -97,6 +108,7 @@ const Affine: React.FC = () => {
         <Container maxWidth="lg">
           <Stack direction="column" spacing={2}>
             <ResultDisplayText
+              placeholder="Output Text"
               displayText={displayTextOutput}
               isSeparated={isSeparated}
             />

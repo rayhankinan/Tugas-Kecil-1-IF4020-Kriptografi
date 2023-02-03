@@ -3,11 +3,13 @@ import { Box, TextField } from "@mui/material";
 
 interface ResultDisplayTextProps {
   displayText: string | undefined;
+  placeholder: string;
   isSeparated: boolean;
 }
 
 const ResultDisplayText: React.FC<ResultDisplayTextProps> = ({
   displayText,
+  placeholder,
   isSeparated,
 }: ResultDisplayTextProps) => {
   const processText = () => {
@@ -21,6 +23,7 @@ const ResultDisplayText: React.FC<ResultDisplayTextProps> = ({
       <TextField
         multiline
         fullWidth
+        placeholder={placeholder}
         rows={10}
         value={processText()}
         variant="standard"
