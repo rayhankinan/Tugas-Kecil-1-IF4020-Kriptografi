@@ -62,6 +62,10 @@ async def apply_static_playfair_to_file(file: UploadFile, func: Callable[[any], 
                     yield await func(array_ascii)
                     array_ascii = []
                 if num == J_INDEX:
+                    if (num == array_ascii[0]):
+                        array_ascii.append(X_INDEX)
+                        yield await func(array_ascii)
+                        array_ascii = []
                     array_ascii.append(J_INDEX - 1)
                 else:
                     array_ascii.append(num)
