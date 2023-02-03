@@ -110,10 +110,7 @@ const Playfair: React.FC = () => {
               isSeparated={isSeparated}
               setIsSeparated={setIsSeparated}
             />
-            <DownloadFileButton
-              fileOutput={fileOutput}
-              disabled={fileOutput === undefined}
-            />
+            <DownloadFileButton fileOutput={fileOutput} />
           </Stack>
         </Container>
       </Stack>

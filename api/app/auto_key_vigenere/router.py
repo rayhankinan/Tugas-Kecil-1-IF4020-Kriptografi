@@ -10,8 +10,7 @@ auto_key_vigenere_router = APIRouter(prefix="/auto-key-vigenere")
 async def encrypt_file_handler(auto_key_vigenere_file_in: AutoKeyVigenereFileIn = Depends()):
     iterable_file_content = await encrypt_file_service(auto_key_vigenere_file_in.key, auto_key_vigenere_file_in.file)
     response = StreamingResponse(
-        content=iterable_file_content,
-        media_type=auto_key_vigenere_file_in.file.content_type
+        content=iterable_file_content
     )
     return response
 
@@ -20,7 +19,6 @@ async def encrypt_file_handler(auto_key_vigenere_file_in: AutoKeyVigenereFileIn 
 async def decrypt_file_handler(auto_key_vigenere_file_in: AutoKeyVigenereFileIn = Depends()):
     iterable_file_content = await decrypt_file_service(auto_key_vigenere_file_in.key, auto_key_vigenere_file_in.file)
     response = StreamingResponse(
-        content=iterable_file_content,
-        media_type=auto_key_vigenere_file_in.file.content_type
+        content=iterable_file_content
     )
     return response

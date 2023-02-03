@@ -8,49 +8,40 @@ import APIClient from "@utils/api-client";
 import AlertProps from "@interface/alert-props";
 import Operation from "@defined-types/operation";
 
-interface SendFormButtonProps {
+interface SendFileButtonProps {
   path: string;
   operation: Operation;
   query: Record<string, string>;
-  displayText: string | undefined;
   fileInput: File | undefined;
   setFileOutput: React.Dispatch<React.SetStateAction<File | undefined>>;
   setAlertProps: React.Dispatch<React.SetStateAction<AlertProps>>;
 }
 
-const SendFormButton: React.FC<SendFormButtonProps> = ({
+const SendFileButton: React.FC<SendFileButtonProps> = ({
   path,
   operation,
   query,
-  displayText,
   fileInput,
   setFileOutput,
   setAlertProps,
-}: SendFormButtonProps) => {
+}: SendFileButtonProps) => {
   const handleSend = async () => {
-    if (!displayText) return;
+    if (!fileInput) return;
 
-    const fileRequest = new File(
-      [displayText],
-      fileInput ? fileInput.name : "REQUEST"
-    );
     const response = await APIClient.Post(
       `${path}/${operation}`,
       query,
-      fileRequest
+      fileInput
     );
 
     if (response instanceof ArrayBuffer) {
-      const fileType = fileInput ? fileInput.type : "text/plain";
-      const fileName = fileInput ? fileInput.name : "RESPONSE";
-
-      const fileResponse = new File([response], fileName, {
-        type: fileType,
+      const fileResponse = new File([response], fileInput.name, {
+        type: fileInput.type,
       });
 
       setFileOutput(fileResponse);
 
-      const message = `${fileRequest.name} berhasil diproses!`;
+      const message = `${fileInput.name} berhasil diproses!`;
       setAlertProps({
         openAlert: true,
         message,
@@ -82,4 +73,4 @@ const SendFormButton: React.FC<SendFormButtonProps> = ({
   );
 };
 
-export default SendFormButton;
+export default SendFileButton;

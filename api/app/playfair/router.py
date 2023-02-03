@@ -10,8 +10,7 @@ playfair_router = APIRouter(prefix="/playfair")
 async def encrypt_file_handler(playfair_file_in: PlayfairFileIn = Depends()):
     iterable_file_content = await encrypt_file_service(playfair_file_in.key, playfair_file_in.file)
     response = StreamingResponse(
-        content=iterable_file_content,
-        media_type=playfair_file_in.file.content_type
+        content=iterable_file_content
     )
     return response
 
@@ -20,7 +19,6 @@ async def encrypt_file_handler(playfair_file_in: PlayfairFileIn = Depends()):
 async def decrypt_file_handler(playfair_file_in: PlayfairFileIn = Depends()):
     iterable_file_content = await decrypt_file_service(playfair_file_in.key, playfair_file_in.file)
     response = StreamingResponse(
-        content=iterable_file_content,
-        media_type=playfair_file_in.file.content_type
+        content=iterable_file_content
     )
     return response

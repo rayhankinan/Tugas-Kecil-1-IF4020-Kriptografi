@@ -4,12 +4,10 @@ import React from "react";
 
 interface DownloadFileButtonProps {
   fileOutput: File | undefined;
-  disabled: boolean;
 }
 
 const DownloadFileButton: React.FC<DownloadFileButtonProps> = ({
   fileOutput,
-  disabled,
 }: DownloadFileButtonProps) => {
   const download = () => {
     if (!fileOutput) return;
@@ -34,9 +32,9 @@ const DownloadFileButton: React.FC<DownloadFileButtonProps> = ({
         component="label"
         startIcon={<DownloadIcon />}
         onClick={download}
-        disabled={disabled}
+        disabled={fileOutput === undefined}
       >
-        Download
+        {fileOutput === undefined ? "Download" : fileOutput?.name}
       </Button>
     </React.Fragment>
   );
