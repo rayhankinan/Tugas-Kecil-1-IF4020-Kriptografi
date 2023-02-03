@@ -75,6 +75,7 @@ const Affine: React.FC = () => {
               <UploadFileButton
                 fileInput={fileInput}
                 setFileInput={setFileInput}
+                accept="text/plain"
               />
               <ClearFileButton
                 fileInput={fileInput}

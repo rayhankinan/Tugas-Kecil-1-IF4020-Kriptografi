@@ -8,11 +8,13 @@ import {
 interface UploadFileButtonProps {
   fileInput: File | undefined;
   setFileInput: React.Dispatch<React.SetStateAction<File | undefined>>;
+  accept?: string | undefined;
 }
 
 const UploadFileButton: React.FC<UploadFileButtonProps> = ({
   fileInput,
   setFileInput,
+  accept,
 }: UploadFileButtonProps) => {
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -30,7 +32,7 @@ const UploadFileButton: React.FC<UploadFileButtonProps> = ({
       startIcon={fileInput ? <AttachmentIcon /> : <UploadIcon />}
     >
       {fileInput ? fileInput.name : "Upload"}
-      <input hidden type="file" onChange={handleUpload} />
+      <input hidden type="file" onChange={handleUpload} accept={accept} />
     </Button>
   );
 };
